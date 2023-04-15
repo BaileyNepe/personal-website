@@ -4,7 +4,11 @@ import { type NextPage } from "next";
 const Home: NextPage = () => {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"></main>
+      <main
+        className="from-[ #2e026d ] flex min-h-screen flex-col items-center
+        justify-center
+      bg-gradient-to-b to-[#15162c]"
+      ></main>
     </>
   );
 };
