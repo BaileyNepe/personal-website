@@ -5,12 +5,13 @@ import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import { ArrowDownIcon } from '@/components/Icons/ArrowDownIcon'
 import { BriefcaseIcon } from '@/components/Icons/BriefcaseIcon'
+import { SchoolIcon } from '@/components/Icons/SchoolIcon'
 import { SocialLinks } from '@/components/SocialLink'
 import avatarImage from '@/images/avatar.jpg'
 import logoAirbnb from '@/images/logos/airbnb.svg'
-import logoFacebook from '@/images/logos/facebook.svg'
+import logoDevelopersInstitute from '@/images/logos/developers-institute.webp'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
-import logoStarbucks from '@/images/logos/starbucks.svg'
+import logoWaikatoAviation from '@/images/logos/waikato-aviation.webp'
 import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 
@@ -24,38 +25,6 @@ function Article({ article }: { article: ArticleWithSlug }) {
       <Card.Description>{article.description}</Card.Description>
       <Card.Cta>Read article</Card.Cta>
     </Card>
-  )
-}
-
-function Education() {
-  const roles: Role[] = [
-    {
-      company: 'University of California, Berkeley',
-      title: 'B.S. in Computer Science',
-      logo: logoAirbnb,
-      start: '2019',
-      end: '2023',
-    },
-    {
-      company: 'University of California, Berkeley',
-      title: 'B.S. in Computer Science',
-      logo: logoAirbnb,
-      start: '2019',
-      end: '2023',
-    },
-  ]
-  return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-        <BriefcaseIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Education</span>
-      </h2>
-      <ol className="mt-6 space-y-4">
-        {roles.map((role, roleIndex) => (
-          <Role key={roleIndex} role={role} />
-        ))}
-      </ol>
-    </div>
   )
 }
 
@@ -77,7 +46,12 @@ function Role({ role }: { role: Role }) {
   return (
     <li className="flex gap-4">
       <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-        <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
+        <Image
+          src={role.logo}
+          alt=""
+          className="h-7 w-7 rounded-full object-contain object-center"
+          unoptimized
+        />
       </div>
       <dl className="flex flex-auto flex-wrap gap-x-2">
         <dt className="sr-only">Company</dt>
@@ -99,41 +73,60 @@ function Role({ role }: { role: Role }) {
   )
 }
 
-function Resume() {
-  let resume: Array<Role> = [
-    {
-      company: 'Planetaria',
-      title: 'CEO',
-      logo: logoPlanetaria,
-      start: '2019',
-      end: {
-        label: 'Present',
-        dateTime: new Date().getFullYear().toString(),
-      },
+const resume: Array<Role> = [
+  {
+    company: "NumberWorks'nWords",
+    title: 'Software Engineer',
+    logo: logoPlanetaria,
+    start: '2022',
+    end: {
+      label: 'Present',
+      dateTime: new Date().getFullYear().toString(),
     },
-    {
-      company: 'Airbnb',
-      title: 'Product Designer',
-      logo: logoAirbnb,
-      start: '2014',
-      end: '2019',
-    },
-    {
-      company: 'Facebook',
-      title: 'iOS Software Engineer',
-      logo: logoFacebook,
-      start: '2011',
-      end: '2014',
-    },
-    {
-      company: 'Starbucks',
-      title: 'Shift Supervisor',
-      logo: logoStarbucks,
-      start: '2008',
-      end: '2011',
-    },
-  ]
+  },
+  {
+    company: 'Waikato Aviation',
+    title: 'Deputy Chief Flying Instructor',
+    logo: logoWaikatoAviation,
+    start: '2016',
+    end: '2020',
+  },
+]
 
+const roles: Role[] = [
+  {
+    company: 'Developers Institute',
+    title: 'Level 6 Diploma in Software Development',
+    logo: logoDevelopersInstitute,
+    start: '2021',
+    end: '2022',
+  },
+  {
+    company: 'Waikato Aviation',
+    title: 'Level 6 Diploma in Aviation',
+    logo: logoWaikatoAviation,
+    start: '2015',
+    end: '2016',
+  },
+]
+
+function Education() {
+  return (
+    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <SchoolIcon className="h-6 w-6 flex-none" />
+        <span className="ml-3">Education</span>
+      </h2>
+      <ol className="mt-6 space-y-4">
+        {roles.map((role, roleIndex) => (
+          <Role key={roleIndex} role={role} />
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+function Resume() {
   return (
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">

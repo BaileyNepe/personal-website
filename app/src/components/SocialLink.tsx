@@ -13,10 +13,18 @@ export const SocialLink = ({
   isLabelVisible?: boolean
 }) => {
   return (
-    <Link className="group -m-1 flex items-center gap-2 p-1" {...props}>
+    <Link
+      className={clsx(
+        'group -m-1 flex items-center gap-2 p-1 transition',
+        isLabelVisible
+          ? 'hover:text-teal-500 dark:hover:text-teal-500'
+          : 'group-hover:fill-zinc-600 dark:group-hover:fill-zinc-600',
+      )}
+      {...props}
+    >
       <Icon
         className={clsx(
-          'h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-600',
+          'h-6 w-6 fill-zinc-500 transition dark:fill-zinc-400',
           label === 'Email' && 'fill-zinc-50 stroke-zinc-500',
         )}
       />

@@ -8,12 +8,12 @@ import { usePathname } from 'next/navigation'
 import { Container } from '@/components/Container'
 import { Line } from '@/components/Line'
 import { getRoutes } from '@/utils/routes'
-import { BookIcon } from './Icons/BookIcon'
 import { BriefcaseIcon } from './Icons/BriefcaseIcon'
 import { GridIcon } from './Icons/GridIcon'
 import { HomeIcon } from './Icons/HomeIcon'
 import { MoonIcon } from './Icons/MoonIcon'
 import { PersonIcon } from './Icons/PersonIcon'
+import { SchoolIcon } from './Icons/SchoolIcon'
 import { SunIcon } from './Icons/SunIcon'
 
 // Icon mapping for routes
@@ -22,7 +22,7 @@ const routeIcons = {
   '/projects': GridIcon,
   '/work': BriefcaseIcon,
   '/about': PersonIcon,
-  '/education': BookIcon,
+  '/education': SchoolIcon,
 }
 
 const NavItem = ({
