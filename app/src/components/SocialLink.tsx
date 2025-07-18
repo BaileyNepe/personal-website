@@ -5,24 +5,31 @@ import Link from 'next/link'
 export const SocialLink = ({
   icon: Icon,
   label,
+  isLabelVisible = false,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Link> & {
   icon: React.ComponentType<{ className?: string }>
-  label?: string
+  label: string
+  isLabelVisible?: boolean
 }) => {
   return (
-    <Link className="group -m-1 p-1" {...props}>
-      <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
-      {label && <span className="text-sm">{label}</span>}
+    <Link className="group -m-1 flex items-center gap-2 p-1" {...props}>
+      <Icon
+        className={clsx(
+          'h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-600',
+          label === 'Email' && 'fill-zinc-50 stroke-zinc-500',
+        )}
+      />
+      {isLabelVisible && <span className="text-sm">{label}</span>}
     </Link>
   )
 }
 
 export const SocialLinks = ({
-  hasText = false,
+  isLabelVisible = false,
   orientation = 'horizontal',
 }: {
-  hasText?: boolean
+  isLabelVisible?: boolean
   orientation?: 'horizontal' | 'vertical'
 }) => {
   return (
@@ -33,7 +40,8 @@ export const SocialLinks = ({
           href={link.path}
           icon={link.icon}
           aria-label={link.label}
-          label={hasText ? link.label : undefined}
+          label={link.label}
+          isLabelVisible={isLabelVisible}
         />
       ))}
     </div>

@@ -34,19 +34,19 @@ export const getRoutes = () => {
 
 export const socialLinks = {
     linkedin: {
-        path: 'https://www.linkedin.com/in/bailey-mccarthy-8b1b1b1b1b/',
+        path: 'https://www.linkedin.com/in/bailey-nepe',
         label: 'LinkedIn',
         icon: LinkedInIcon,
     },
     github: {
-        path: 'https://github.com/bailey-mccarthy',
+        path: 'https://github.com/BaileyNepe',
         label: 'GitHub',
         icon: GitHubIcon,
 
     },
     email: {
-        path: 'mailto:bailey@planetaria.com',
-        label: 'Email',
+        path: 'mailto:bailey.nepe@gmail.com',
+        label: 'bailey.nepe@gmail.com',
         isMail: true,
         icon: MailIcon,
     }

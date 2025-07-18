@@ -1,17 +1,10 @@
 import Image, { type ImageProps } from 'next/image'
-import Link from 'next/link'
 
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import { ArrowDownIcon } from '@/components/Icons/ArrowDownIcon'
 import { BriefcaseIcon } from '@/components/Icons/BriefcaseIcon'
-import {
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  XIcon,
-} from '@/components/Icons/SocialIcons'
 import { SocialLinks } from '@/components/SocialLink'
 import avatarImage from '@/images/avatar.jpg'
 import logoAirbnb from '@/images/logos/airbnb.svg'
