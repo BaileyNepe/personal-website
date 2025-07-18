@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image, { type ImageProps } from 'next/image'
 import Link from 'next/link'
 
@@ -13,16 +12,12 @@ import {
   LinkedInIcon,
   XIcon,
 } from '@/components/Icons/SocialIcons'
+import { SocialLinks } from '@/components/SocialLink'
 import avatarImage from '@/images/avatar.jpg'
 import logoAirbnb from '@/images/logos/airbnb.svg'
 import logoFacebook from '@/images/logos/facebook.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
 import logoStarbucks from '@/images/logos/starbucks.svg'
-import image1 from '@/images/photos/image-1.jpg'
-import image2 from '@/images/photos/image-2.jpg'
-import image3 from '@/images/photos/image-3.jpg'
-import image4 from '@/images/photos/image-4.jpg'
-import image5 from '@/images/photos/image-5.jpg'
 import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 
@@ -36,19 +31,6 @@ function Article({ article }: { article: ArticleWithSlug }) {
       <Card.Description>{article.description}</Card.Description>
       <Card.Cta>Read article</Card.Cta>
     </Card>
-  )
-}
-
-function SocialLink({
-  icon: Icon,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof Link> & {
-  icon: React.ComponentType<{ className?: string }>
-}) {
-  return (
-    <Link className="group -m-1 p-1" {...props}>
-      <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
-    </Link>
   )
 }
 
@@ -185,39 +167,28 @@ export default async function Home() {
     <>
       <Container className="mt-12 md:mt-24">
         <div className="max-w-2xl lg:max-w-5xl">
-          <div className="flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex-1 md:max-w-8/12">
-              <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-                Software designer, founder, and amateur astronaut.
-              </h1>
-              <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                I&apos;m Spencer, a software designer and entrepreneur based in New York
-                City. I&apos;m the founder and CEO of Planetaria, where we develop
-                technologies that empower regular people to explore space on their own
-                terms.
-              </p>
-              <div className="mt-6 flex gap-6">
-                <SocialLink href="#" aria-label="Follow on X" icon={XIcon} />
-                <SocialLink
-                  href="#"
-                  aria-label="Follow on Instagram"
-                  icon={InstagramIcon}
-                />
-                <SocialLink href="#" aria-label="Follow on GitHub" icon={GitHubIcon} />
-                <SocialLink
-                  href="#"
-                  aria-label="Follow on LinkedIn"
-                  icon={LinkedInIcon}
-                />
-              </div>
-            </div>
-            <div className="flex flex-shrink-0">
+          <div className="flex flex-col items-center gap-8 text-center">
+            <div className="flex justify-center">
               <Image
                 src={avatarImage}
                 alt="Avatar"
                 className="h-24 w-24 rounded-full object-cover sm:h-32 sm:w-32 lg:h-36 lg:w-36"
                 priority
               />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+                Software Engineer, founder, and amateur astronaut.
+              </h1>
+              <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
+                Hi, I&apos;m Bailey 👋. I am a software engineer based in Morrinsville,
+                New Zealand. I&apos;m the founder and CEO of Planetaria, where we develop
+                technologies that empower regular people to explore space on their own
+                terms.
+              </p>
+              <div className="mt-6 flex justify-center gap-6">
+                <SocialLinks />
+              </div>
             </div>
           </div>
         </div>

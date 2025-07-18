@@ -1,3 +1,6 @@
+import { MailIcon } from "@/components/Icons/MailIcon"
+import { GitHubIcon, LinkedInIcon } from "@/components/Icons/SocialIcons"
+
 export const routes = {
     home: {
         path: '/',
@@ -26,4 +29,25 @@ export const getRoutes = () => {
         path: route.path,
         label: route.label,
     }))
+}
+
+
+export const socialLinks = {
+    linkedin: {
+        path: 'https://www.linkedin.com/in/bailey-mccarthy-8b1b1b1b1b/',
+        label: 'LinkedIn',
+        icon: LinkedInIcon,
+    },
+    github: {
+        path: 'https://github.com/bailey-mccarthy',
+        label: 'GitHub',
+        icon: GitHubIcon,
+
+    },
+    email: {
+        path: 'mailto:bailey@planetaria.com',
+        label: 'Email',
+        isMail: true,
+        icon: MailIcon,
+    }
 }
