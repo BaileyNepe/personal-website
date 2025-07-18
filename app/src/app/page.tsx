@@ -265,7 +265,7 @@ export default async function Home() {
 
   return (
     <>
-      <Container className="mt-9">
+      <Container className="mt-24">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
             Software designer, founder, and amateur astronaut.
@@ -283,7 +283,6 @@ export default async function Home() {
           </div>
         </div>
       </Container>
-      <Photos />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
