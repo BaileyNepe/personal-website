@@ -2,7 +2,7 @@
 module.exports = {
   singleQuote: true,
   semi: false,
-  lineWidth: 90,
+  printWidth: 90,
   plugins: ['prettier-plugin-tailwindcss'],
-  tailwindStylesheet: './src/styles/tailwind.css',
+  tailwindConfig: './tailwind.config.js',
 }

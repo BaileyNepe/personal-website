@@ -1,101 +1,58 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Popover, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react'
+import clsx from 'clsx'
+import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useTheme } from 'next-themes'
-import {
-  Popover,
-  PopoverButton,
-  PopoverBackdrop,
-  PopoverPanel,
-} from '@headlessui/react'
-import clsx from 'clsx'
+import { useEffect, useRef, useState } from 'react'
 
 import { Container } from '@/components/Container'
+import { Line } from '@/components/Line'
 import avatarImage from '@/images/avatar.jpg'
+import { getRoutes } from '@/utils/routes'
+import { BookIcon } from './Icons/BookIcon'
+import { BriefcaseIcon } from './Icons/BriefcaseIcon'
+import { ChevronDownIcon } from './Icons/ChevronDownIcon'
+import { CloseIcon } from './Icons/CloseIcon'
+import { GridIcon } from './Icons/GridIcon'
+import { HomeIcon } from './Icons/HomeIcon'
+import { MoonIcon } from './Icons/MoonIcon'
+import { PersonIcon } from './Icons/PersonIcon'
+import { SunIcon } from './Icons/SunIcon'
 
-function CloseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
+// Icon mapping for routes
+const routeIcons = {
+  '/': HomeIcon,
+  '/projects': GridIcon,
+  '/work': BriefcaseIcon,
+  '/about': PersonIcon,
+  '/education': BookIcon,
 }
 
-function ChevronDownIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 8 6" aria-hidden="true" {...props}>
-      <path
-        d="M1.75 1.75 4 4.25l2.25-2.5"
-        fill="none"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function SunIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M8 12.25A4.25 4.25 0 0 1 12.25 8v0a4.25 4.25 0 0 1 4.25 4.25v0a4.25 4.25 0 0 1-4.25 4.25v0A4.25 4.25 0 0 1 8 12.25v0Z" />
-      <path
-        d="M12.25 3v1.5M21.5 12.25H20M18.791 18.791l-1.06-1.06M18.791 5.709l-1.06 1.06M12.25 20v1.5M4.5 12.25H3M6.77 6.77 5.709 5.709M6.77 17.73l-1.061 1.061"
-        fill="none"
-      />
-    </svg>
-  )
-}
-
-function MoonIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        d="M17.25 16.22a6.937 6.937 0 0 1-9.47-9.47 7.451 7.451 0 1 0 9.47 9.47ZM12.75 7C17 7 17 2.75 17 2.75S17 7 21.25 7C17 7 17 11.25 17 11.25S17 7 12.75 7Z"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function MobileNavItem({
-  href,
-  children,
-}: {
+function MobileNavItem({ 
+  href, 
+  children, 
+  icon: Icon 
+}: { 
   href: string
   children: React.ReactNode
+  icon?: React.ComponentType<React.ComponentPropsWithoutRef<'svg'>>
 }) {
   return (
     <li>
-      <PopoverButton as={Link} href={href} className="block py-2">
+      <PopoverButton as={Link} href={href} className="flex items-center gap-3 py-2">
+        {Icon && <Icon className="h-4 w-4" />}
         {children}
       </PopoverButton>
     </li>
   )
 }
 
-function MobileNavigation(
-  props: React.ComponentPropsWithoutRef<typeof Popover>,
-) {
+function MobileNavigation(props: React.ComponentPropsWithoutRef<typeof Popover>) {
+  const routes = getRoutes()
+  
   return (
     <Popover {...props}>
       <PopoverButton className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
@@ -121,11 +78,14 @@ function MobileNavigation(
         </div>
         <nav className="mt-6">
           <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-            <MobileNavItem href="/about">About</MobileNavItem>
-            <MobileNavItem href="/articles">Articles</MobileNavItem>
-            <MobileNavItem href="/projects">Projects</MobileNavItem>
-            <MobileNavItem href="/speaking">Speaking</MobileNavItem>
-            <MobileNavItem href="/uses">Uses</MobileNavItem>
+            {routes.map((route) => {
+              const Icon = routeIcons[route.path as keyof typeof routeIcons]
+              return (
+                <MobileNavItem key={route.path} href={route.path} icon={Icon}>
+                  {route.label}
+                </MobileNavItem>
+              )
+            })}
           </ul>
         </nav>
       </PopoverPanel>
@@ -133,12 +93,16 @@ function MobileNavigation(
   )
 }
 
-function NavItem({
-  href,
-  children,
-}: {
+function NavItem({ 
+  href, 
+  children, 
+  icon: Icon,
+  iconOnly = false 
+}: { 
   href: string
   children: React.ReactNode
+  icon?: React.ComponentType<React.ComponentPropsWithoutRef<'svg'>>
+  iconOnly?: boolean
 }) {
   let isActive = usePathname() === href
 
@@ -147,15 +111,23 @@ function NavItem({
       <Link
         href={href}
         className={clsx(
-          'relative block px-3 py-2 transition',
+          'relative flex items-center gap-2 px-3 py-2 transition',
           isActive
             ? 'text-teal-500 dark:text-teal-400'
             : 'hover:text-teal-500 dark:hover:text-teal-400',
         )}
       >
-        {children}
+        {Icon && (
+          <Icon className={clsx(
+            'h-4 w-4',
+            isActive ? 'fill-teal-500/10 stroke-teal-500 dark:fill-teal-400/10 dark:stroke-teal-400' : 'stroke-current'
+          )} />
+        )}
+        {!iconOnly && (
+          <span className="hidden sm:block">{children}</span>
+        )}
         {isActive && (
-          <span className="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0" />
+          <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0" />
         )}
       </Link>
     </li>
@@ -163,14 +135,41 @@ function NavItem({
 }
 
 function DesktopNavigation(props: React.ComponentPropsWithoutRef<'nav'>) {
+  const routes = getRoutes()
+  const otherRoutes = routes.filter(route => route.path !== '/')
+  
   return (
     <nav {...props}>
-      <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/about">About</NavItem>
-        <NavItem href="/articles">Articles</NavItem>
-        <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/speaking">Speaking</NavItem>
-        <NavItem href="/uses">Uses</NavItem>
+      <ul className="flex items-center rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+        {/* Home - icon only */}
+        <NavItem href="/" icon={HomeIcon} iconOnly>
+          Home
+        </NavItem>
+        
+        {/* Divider */}
+        <li className="px-2">
+          <Line />
+        </li>
+        
+        {/* Other routes with icons and labels */}
+        {otherRoutes.map((route) => {
+          const Icon = routeIcons[route.path as keyof typeof routeIcons]
+          return (
+            <NavItem key={route.path} href={route.path} icon={Icon}>
+              {route.label}
+            </NavItem>
+          )
+        })}
+        
+        {/* Divider before theme toggle */}
+        <li className="px-2">
+          <Line />
+        </li>
+        
+        {/* Theme toggle */}
+        <li>
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
   )
@@ -189,11 +188,11 @@ function ThemeToggle() {
     <button
       type="button"
       aria-label={mounted ? `Switch to ${otherTheme} theme` : 'Toggle theme'}
-      className="group rounded-full bg-white/90 px-3 py-2 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+      className="group rounded-full bg-white/90 px-2 py-1 shadow-lg  shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20 cursor-pointer"
       onClick={() => setTheme(otherTheme)}
     >
-      <SunIcon className="h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
-      <MoonIcon className="hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition not-[@media_(prefers-color-scheme:dark)]:fill-teal-400/10 not-[@media_(prefers-color-scheme:dark)]:stroke-teal-500 dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400" />
+      <SunIcon className="h-4 w-4 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
+      <MoonIcon className="hidden h-4 w-4 fill-zinc-700 stroke-zinc-500 transition not-[@media_(prefers-color-scheme:dark)]:fill-teal-400/10 not-[@media_(prefers-color-scheme:dark)]:stroke-teal-500 dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400" />
     </button>
   )
 }
@@ -204,10 +203,7 @@ function clamp(number: number, a: number, b: number) {
   return Math.min(Math.max(number, min), max)
 }
 
-function AvatarContainer({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
+function AvatarContainer({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   return (
     <div
       className={clsx(
@@ -372,8 +368,7 @@ export function Header() {
             <Container
               className="top-0 order-last -mb-3 pt-3"
               style={{
-                position:
-                  'var(--header-position)' as React.CSSProperties['position'],
+                position: 'var(--header-position)' as React.CSSProperties['position'],
               }}
             >
               <div
@@ -405,15 +400,13 @@ export function Header() {
           ref={headerRef}
           className="top-0 z-10 h-16 pt-6"
           style={{
-            position:
-              'var(--header-position)' as React.CSSProperties['position'],
+            position: 'var(--header-position)' as React.CSSProperties['position'],
           }}
         >
           <Container
             className="top-(--header-top,--spacing(6)) w-full"
             style={{
-              position:
-                'var(--header-inner-position)' as React.CSSProperties['position'],
+              position: 'var(--header-inner-position)' as React.CSSProperties['position'],
             }}
           >
             <div className="relative flex gap-4">
@@ -425,23 +418,18 @@ export function Header() {
                 )}
               </div>
               <div className="flex flex-1 justify-end md:justify-center">
-                <MobileNavigation className="pointer-events-auto md:hidden" />
-                <DesktopNavigation className="pointer-events-auto hidden md:block" />
+                {/* <MobileNavigation className="pointer-events-auto md:hidden" /> */}
+                <DesktopNavigation className="pointer-events-auto md:block" />
               </div>
               <div className="flex justify-end md:flex-1">
-                <div className="pointer-events-auto">
-                  <ThemeToggle />
-                </div>
+              
               </div>
             </div>
           </Container>
         </div>
       </header>
       {isHomePage && (
-        <div
-          className="flex-none"
-          style={{ height: 'var(--content-offset)' }}
-        />
+        <div className="flex-none" style={{ height: 'var(--content-offset)' }} />
       )}
     </>
   )
