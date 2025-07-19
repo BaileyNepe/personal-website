@@ -1,16 +1,9 @@
 import Link from 'next/link'
 
 import { ContainerInner, ContainerOuter } from '@/components/Container'
+import { getRoutes } from '@/utils/routes'
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link href={href} className="transition hover:text-teal-500 dark:hover:text-teal-400">
-      {children}
-    </Link>
-  )
-}
-
-export function Footer() {
+export const Footer = () => {
   return (
     <footer className="mt-32 flex-none">
       <ContainerOuter>
@@ -18,13 +11,18 @@ export function Footer() {
           <ContainerInner>
             <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                <NavLink href="/about">About</NavLink>
-                <NavLink href="/projects">Projects</NavLink>
-                <NavLink href="/speaking">Speaking</NavLink>
-                <NavLink href="/uses">Uses</NavLink>
+                {Object.entries(getRoutes()).map(([_, { label, path }]) => (
+                  <Link
+                    href={path}
+                    key={path}
+                    className="transition hover:text-teal-500 dark:hover:text-teal-400"
+                  >
+                    {label}
+                  </Link>
+                ))}
               </div>
               <p className="text-sm text-zinc-400 dark:text-zinc-500">
-                &copy; {new Date().getFullYear()} Spencer Sharp. All rights reserved.
+                &copy; {new Date().getFullYear()} Bailey Nepe. All rights reserved.
               </p>
             </div>
           </ContainerInner>
@@ -33,3 +31,4 @@ export function Footer() {
     </footer>
   )
 }
+export default Footer
