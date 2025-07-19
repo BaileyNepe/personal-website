@@ -1,4 +1,5 @@
 import Image, { type ImageProps } from 'next/image'
+import Link from 'next/link'
 
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
@@ -6,6 +7,7 @@ import { Container } from '@/components/Container'
 import { ArrowDownIcon } from '@/components/Icons/ArrowDownIcon'
 import { ArrowRightIcon } from '@/components/Icons/ArrowRightIcon'
 import { BriefcaseIcon } from '@/components/Icons/BriefcaseIcon'
+import { ChevronRightIcon } from '@/components/Icons/ChevronRightIcon'
 import { SchoolIcon } from '@/components/Icons/SchoolIcon'
 import { SocialLinks } from '@/components/SocialLink'
 import avatarImage from '@/images/avatar.webp'
@@ -35,6 +37,7 @@ interface Role {
   logo: ImageProps['src']
   start: string | { label: string; dateTime: string }
   end: string | { label: string; dateTime: string }
+  url: string
 }
 
 const Role = ({ role }: { role: Role }) => {
@@ -45,32 +48,37 @@ const Role = ({ role }: { role: Role }) => {
   let endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
 
   return (
-    <li className="flex gap-4">
-      <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-        <Image
-          src={role.logo}
-          alt=""
-          className="h-7 w-7 rounded-full object-contain object-center"
-          unoptimized
-        />
-      </div>
-      <dl className="flex flex-auto flex-wrap gap-x-2">
-        <dt className="sr-only">Company</dt>
-        <dd className="flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
-          {role.company}
-        </dd>
-        <dt className="sr-only">Date</dt>
-        <dd
-          className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
-          aria-label={`${startLabel} until ${endLabel}`}
-        >
-          <time dateTime={startDate}>{startLabel}</time> <span aria-hidden="true">—</span>{' '}
-          <time dateTime={endDate}>{endLabel}</time>
-        </dd>
-        <dt className="sr-only">Role</dt>
-        <dd className="w-full text-xs text-zinc-500 dark:text-zinc-400">{role.title}</dd>
-      </dl>
-    </li>
+    <Link href={role.url} className="block">
+      <li className="group flex cursor-pointer gap-4">
+        <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+          <Image
+            src={role.logo}
+            alt=""
+            className="h-7 w-7 rounded-full object-contain object-center"
+            unoptimized
+          />
+        </div>
+        <dl className="flex flex-auto flex-wrap gap-x-2">
+          <dt className="sr-only">Company</dt>
+          <dd className="flex flex-none items-center gap-2 text-sm font-medium text-zinc-900 transition-colors group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-300">
+            {role.company}
+            <ChevronRightIcon className="h-4 w-4 translate-x-[-8px] stroke-zinc-400 font-bold opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 dark:stroke-zinc-500" />
+          </dd>
+          <dt className="sr-only">Date</dt>
+          <dd
+            className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
+            aria-label={`${startLabel} until ${endLabel}`}
+          >
+            <time dateTime={startDate}>{startLabel}</time>{' '}
+            <span aria-hidden="true">—</span> <time dateTime={endDate}>{endLabel}</time>
+          </dd>
+          <dt className="sr-only">Role</dt>
+          <dd className="w-full text-xs text-zinc-500 dark:text-zinc-400">
+            {role.title}
+          </dd>
+        </dl>
+      </li>
+    </Link>
   )
 }
 
@@ -84,6 +92,7 @@ const resume: Array<Role> = [
       label: 'Present',
       dateTime: new Date().getFullYear().toString(),
     },
+    url: '/work/numberworksnwords',
   },
   {
     company: 'Waikato Aviation',
@@ -91,6 +100,7 @@ const resume: Array<Role> = [
     logo: logoWaikatoAviation,
     start: '2016',
     end: '2020',
+    url: '/work/waikato-aviation',
   },
 ]
 
@@ -101,6 +111,7 @@ const roles: Role[] = [
     logo: logoDevelopersInstitute,
     start: '2021',
     end: '2022',
+    url: '/education/developers-institute',
   },
   {
     company: 'Waikato Aviation',
@@ -108,6 +119,7 @@ const roles: Role[] = [
     logo: logoWaikatoAviation,
     start: '2015',
     end: '2016',
+    url: '/education/waikato-aviation',
   },
 ]
 
@@ -123,7 +135,7 @@ const InfoBlock = ({
   icon: React.ReactNode
 }) => {
   return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+    <div className="rounded-2xl border border-zinc-200 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         {icon}
         <span className="ml-3">{title}</span>
