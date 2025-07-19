@@ -3,9 +3,9 @@ import { type Metadata } from 'next'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
-import { type ProjectWithSlug, getAllProjects } from '@/lib/projects'
+import { type Project, type WithSlug, getAllProjects } from '@/lib/slugImports'
 
-const Project = ({ project }: { project: ProjectWithSlug }) => {
+const Project = ({ project }: { project: WithSlug<Project> }) => {
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
       <Card className="md:col-span-3">

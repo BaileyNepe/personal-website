@@ -15,10 +15,10 @@ import logoDevelopersInstitute from '@/images/logos/developers-institute.webp'
 import logoNumberWorksNWords from '@/images/logos/nww.webp'
 import logoWaikatoAviation from '@/images/logos/waikato-aviation.webp'
 import { formatDate } from '@/lib/formatDate'
-import { type ProjectWithSlug, getAllProjects } from '@/lib/projects'
+import { type Project, type WithSlug, getAllProjects } from '@/lib/slugImports'
 import { routes } from '@/utils/routes'
 
-const Project = ({ project }: { project: ProjectWithSlug }) => {
+const Project = ({ project }: { project: WithSlug<Project> }) => {
   return (
     <Card as="article">
       <Card.Title href={`/projects/${project.slug}`}>{project.title}</Card.Title>
@@ -134,6 +134,7 @@ const InfoBlock = ({
   cta?: React.ReactNode
   icon: React.ReactNode
 }) => {
+  console.log('tes')
   return (
     <div className="rounded-2xl border border-zinc-200 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
@@ -148,6 +149,7 @@ const InfoBlock = ({
 
 const Home = async () => {
   const projects = (await getAllProjects()).slice(0, 2)
+  console.log(projects)
 
   return (
     <>

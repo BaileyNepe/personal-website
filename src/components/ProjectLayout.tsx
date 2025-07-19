@@ -7,14 +7,14 @@ import { AppContext } from '@/app/providers'
 import { Container } from '@/components/Container'
 import { Prose } from '@/components/Prose'
 import { formatDate } from '@/lib/formatDate'
-import { type ProjectWithSlug } from '@/lib/projects'
+import { type Project, type WithSlug } from '@/lib/slugImports'
 import { ArrowLeftIcon } from './Icons/ArrowLeftIcon'
 
 export const ProjectLayout = ({
   project,
   children,
 }: {
-  project: ProjectWithSlug
+  project: WithSlug<Project>
   children: React.ReactNode
 }) => {
   const router = useRouter()
