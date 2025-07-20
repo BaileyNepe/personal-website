@@ -1,9 +1,9 @@
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
-import { type Project, type WithSlug, getAllProjects } from '@/lib/slugImports'
+import { getAllProjects, type Project, type WithSlug } from '@/lib/slugImports'
 
 const Project = ({ project }: { project: WithSlug<Project> }) => {
   return (

@@ -1,37 +1,127 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
-	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
-	"files": { "ignoreUnknown": false },
-	"formatter": {
-		"enabled": true,
-		"formatWithErrors": false,
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineEnding": "lf",
-		"lineWidth": 90,
-		"attributePosition": "auto",
-		"bracketSameLine": false,
-		"bracketSpacing": true,
-		"expand": "auto",
-		"useEditorconfig": true
-	},
-	"linter": { "enabled": true, "rules": { "recommended": true } },
-	"javascript": {
-		"formatter": {
-			"jsxQuoteStyle": "double",
-			"quoteProperties": "asNeeded",
-			"trailingCommas": "all",
-			"semicolons": "asNeeded",
-			"arrowParentheses": "always",
-			"bracketSameLine": false,
-			"quoteStyle": "single",
-			"attributePosition": "auto",
-			"bracketSpacing": true
-		}
-	},
-	"html": { "formatter": { "selfCloseVoidElements": "always" } },
-	"assist": {
-		"enabled": true,
-		"actions": { "source": { "organizeImports": "on" } }
-	}
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+  "files": {
+    "includes": [
+      "**",
+      "!**/node_modules/",
+      "!**/dist/",
+      "!**/.prettierrc.js",
+      "!**/assets/**/*",
+      "!**/routeTree.gen.ts",
+      "!**/dist/",
+      "!**/build/",
+      "!**/node_modules/**/*",
+      "!**/dist/**/*",
+      "!**/.prettierrc.js",
+      "!**/.eslintrc.js",
+      "!**/env.d.ts",
+      "!**/node_modules/**",
+      "!**/client/node_modules/**",
+      "!**/server/node_modules/**",
+      "!**/client/dist/**",
+      "!**/server/dist/**",
+      "!**/shared/dist/**",
+      "!**/server/dist/",
+      "!**/client/dist/",
+      "!**/shared/node_modules/**",
+      "!**/apps/client/src/features/Directives/directivesRegistry.ts",
+      "!**/routeTree.gen.ts",
+      "!**/packages/db/generated/**"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "useEditorconfig": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 90,
+    "attributePosition": "auto",
+    "bracketSpacing": true
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+
+      "a11y": { "useKeyWithClickEvents": "off" },
+      "complexity": {
+        "noExtraBooleanCast": "error",
+        "noUselessRename": "error",
+        "noUselessStringConcat": "error",
+        "noUselessTernary": "error",
+        "noUselessUndefinedInitialization": "error",
+        "useArrowFunction": "error",
+        "useLiteralKeys": "error",
+        "noArguments": "error",
+        "useNumericLiterals": "error"
+      },
+      "correctness": {
+        "noInvalidUseBeforeDeclaration": "off",
+        "noUnusedVariables": "warn",
+        "noUnusedImports": "warn"
+      },
+      "style": {
+        "noParameterAssign": "error",
+        "noUselessElse": "off",
+        "noYodaExpression": "error",
+        "useBlockStatements": "off",
+        "useCollapsedElseIf": "error",
+        "useConst": "error",
+        "useExponentiationOperator": "error",
+        "useForOf": "warn",
+        "useImportType": "warn",
+        "useShorthandAssign": "error",
+        "useSingleVarDeclarator": "error",
+        "useTemplate": "error"
+      },
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noConsole": "warn",
+        "noDebugger": "warn",
+        "noDoubleEquals": "error",
+        "noEmptyBlockStatements": "off",
+        "noVar": "error"
+      }
+    },
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "!**/dist/",
+      "!**/build/",
+      "!**/node_modules/**/*",
+      "!**/dist/**/*",
+      "!**/.prettierrc.js",
+      "!**/.eslintrc.js",
+      "!**/env.d.ts",
+      "!**/node_modules/**",
+      "!**/client/node_modules/**",
+      "!**/server/node_modules/**",
+      "!**/client/dist/**",
+      "!**/server/dist/**",
+      "!**/shared/dist/**",
+      "!**/server/dist/",
+      "!**/client/dist/",
+      "!**/shared/node_modules/**",
+      "!**/apps/client/src/features/Directives/directivesRegistry.ts",
+      "!**/routeTree.gen.ts",
+      "!**/packages/db/generated/**"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "none",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    }
+  }
 }

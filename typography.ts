@@ -1,4 +1,4 @@
-import { type Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss'
 
 export default {
   theme: {
@@ -19,6 +19,7 @@ export default {
           '--tw-prose-captions': 'var(--tw-prose-invert-captions)',
           '--tw-prose-code': 'var(--tw-prose-invert-code)',
           '--tw-prose-code-bg': 'var(--tw-prose-invert-code-bg)',
+
           '--tw-prose-pre-code': 'var(--tw-prose-invert-pre-code)',
           '--tw-prose-pre-bg': 'var(--tw-prose-invert-pre-bg)',
           '--tw-prose-pre-border': 'var(--tw-prose-invert-pre-border)',
