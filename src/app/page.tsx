@@ -14,18 +14,43 @@ import avatarImage from '@/images/avatar.webp'
 import logoDevelopersInstitute from '@/images/logos/developers-institute.webp'
 import logoNumberWorksNWords from '@/images/logos/nww.webp'
 import logoWaikatoAviation from '@/images/logos/waikato-aviation.webp'
-import { formatDate } from '@/lib/formatDate'
 import { getAllProjects, type Project, type WithSlug } from '@/lib/slugImports'
 import { routes } from '@/utils/routes'
 
 const ProjectCard = ({ project }: { project: WithSlug<Project> }) => {
   return (
     <Card as='article'>
+      {project.image && (
+        <div className='relative z-10 mb-4 aspect-video w-full overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800'>
+          <Image
+            src={project.image}
+            alt={`${project.title} preview`}
+            fill
+            className='object-cover transition-transform duration-300 group-hover:scale-105'
+            sizes='(min-width: 1024px) 50vw, 100vw'
+          />
+        </div>
+      )}
       <Card.Title href={`/projects/${project.slug}`}>{project.title}</Card.Title>
-      <Card.Eyebrow as='time' dateTime={project.date} decorate>
-        {formatDate(project.date)}
-      </Card.Eyebrow>
+
       <Card.Description>{project.description}</Card.Description>
+      {project.tags && project.tags.length > 0 && (
+        <div className='relative z-10 mt-2 flex flex-wrap gap-1'>
+          {project.tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className='inline-flex items-center rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
+            >
+              {tag}
+            </span>
+          ))}
+          {project.tags.length > 3 && (
+            <span className='inline-flex items-center rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500'>
+              +{project.tags.length - 3} more
+            </span>
+          )}
+        </div>
+      )}
       <Card.Cta>View project</Card.Cta>
     </Card>
   )
@@ -65,10 +90,7 @@ const Role = ({ role }: { role: Role }) => {
             <ChevronRightIcon className='h-4 w-4 translate-x-[-8px] stroke-zinc-400 font-bold opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 dark:stroke-zinc-500' />
           </dd>
           <dt className='sr-only'>Date</dt>
-          <dd
-            className='ml-auto text-xs text-zinc-400 dark:text-zinc-500'
-            
-          >
+          <dd className='ml-auto text-xs text-zinc-400 dark:text-zinc-500'>
             <time dateTime={startDate}>{startLabel}</time>{' '}
             <span aria-hidden='true'>—</span> <time dateTime={endDate}>{endLabel}</time>
           </dd>
@@ -134,7 +156,6 @@ const InfoBlock = ({
   cta?: React.ReactNode
   icon: React.ReactNode
 }) => {
-  console.log('tes')
   return (
     <div className='rounded-2xl border border-zinc-200 p-6 dark:border-zinc-700/40'>
       <h2 className='flex text-sm font-semibold text-zinc-900 dark:text-zinc-100'>
@@ -149,7 +170,6 @@ const InfoBlock = ({
 
 const Home = async () => {
   const projects = (await getAllProjects()).slice(0, 2)
-  console.log(projects)
 
   return (
     <>
@@ -208,8 +228,8 @@ const Home = async () => {
                 </Button>
               }
             >
-              {resume.map((role, roleIndex) => (
-                <Role key={roleIndex} role={role} />
+              {resume.map((role) => (
+                <Role key={`${role.company}-${role.title}`} role={role} />
               ))}
             </InfoBlock>
 
@@ -218,8 +238,8 @@ const Home = async () => {
               title='Education'
               icon={<SchoolIcon className='h-6 w-6 flex-none' />}
             >
-              {roles.map((role, roleIndex) => (
-                <Role key={roleIndex} role={role} />
+              {roles.map((role) => (
+                <Role key={`${role.company}-${role.title}`} role={role} />
               ))}
             </InfoBlock>
           </div>

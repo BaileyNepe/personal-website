@@ -3,9 +3,12 @@ import type { ComponentType } from 'react'
 
 // --- Data interfaces ---
 export interface Project {
+    id: number
     title: string
     description: string
-    date: string
+    image: string
+    slug: string
+    tags: string[]
 }
 
 export interface Work {
@@ -62,7 +65,7 @@ export const getAllProjects = async () =>
     getAllEntries<Project>({
         dir: 'projects',
         exportName: 'project',
-        sortFn: (a, b) => +new Date(b.date) - +new Date(a.date),
+        sortFn: (a, b) => b.id - a.id,
     })
 
 export const getAllWork = async () =>

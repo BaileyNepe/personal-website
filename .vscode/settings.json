@@ -30,9 +30,16 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[mdx]": {
+    // ⬇️ completely disable on‑save formatting for MDX
+    "editor.formatOnSave": false,
+
+    // ⬇️ stop code actions (fix‑alls, organise‑imports, etc.)
     "editor.codeActionsOnSave": {
-      "source.fixAll": false,
-      "source.organizeImports": false
-    }
+      "source.fixAll": "never",
+      "source.organizeImports": "never"
+    },
+
+    // ⬇️ make sure no default formatter is invoked
+    "editor.defaultFormatter": null
   }
 }
