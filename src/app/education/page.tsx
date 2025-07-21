@@ -12,14 +12,14 @@ const EducationCard = ({ education }: { education: WithSlug<Education> }) => {
 
   return (
     <article className='group relative'>
-      <div className='absolute left-0 top-6 h-full w-px bg-zinc-200 dark:bg-zinc-700' />
-      <div className='relative flex gap-6'>
+      <div className='absolute left-6 top-6 h-full w-px bg-zinc-200 dark:bg-zinc-700 max-sm:left-5' />
+      <div className='relative flex gap-4 sm:gap-6'>
         <div className='relative flex-none'>
-          <div className='flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-zinc-200 dark:bg-zinc-800 dark:ring-zinc-700'>
+          <div className='flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white shadow-md ring-1 ring-zinc-200 dark:bg-zinc-800 dark:ring-zinc-700'>
             <Image
               src={education.logo}
               alt={`${education.institution} logo`}
-              className='h-8 w-8 rounded-full object-contain'
+              className='h-6 w-6 sm:h-8 sm:w-8 rounded-full object-contain'
               width={32}
               height={32}
               unoptimized
@@ -32,11 +32,11 @@ const EducationCard = ({ education }: { education: WithSlug<Education> }) => {
           )}
         </div>
 
-        <div className='min-w-0 flex-auto pb-12'>
+        <div className='min-w-0 flex-auto pb-8 sm:pb-12'>
           <Card className='!p-0'>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-3 sm:gap-4'>
               <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2'>
-                <div>
+                <div className='flex-1 min-w-0 pr-4'>
                   <Card.Title
                     href={`/education/${education.slug}`}
                     className='text-lg font-semibold'
@@ -49,8 +49,8 @@ const EducationCard = ({ education }: { education: WithSlug<Education> }) => {
                     </p>
                   )}
                 </div>
-                <div className='flex flex-col items-start sm:items-end gap-1'>
-                  <time className='text-sm font-medium text-zinc-600 dark:text-zinc-400'>
+                <div className='flex-shrink-0 min-w-fit'>
+                  <time className='text-sm font-medium text-zinc-600 dark:text-zinc-400 whitespace-nowrap'>
                     {formatDate(education.startDate)} —{' '}
                     {typeof endDate === 'string' && endDate !== 'Present'
                       ? formatDate(endDate)
@@ -60,11 +60,11 @@ const EducationCard = ({ education }: { education: WithSlug<Education> }) => {
               </div>
 
               <div className='border-l-2 border-zinc-100 pl-4 dark:border-zinc-800'>
-                <h3 className='font-medium text-zinc-900 dark:text-zinc-100'>
+                <h3 className='font-medium text-zinc-900 dark:text-zinc-100 mb-2'>
                   {education.qualification}
                 </h3>
                 {education.description && (
-                  <div className='mt-1'>
+                  <div className='max-w-2xl'>
                     <Card.Description>{education.description}</Card.Description>
                   </div>
                 )}

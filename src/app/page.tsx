@@ -104,7 +104,7 @@ const WorkCard = ({ work }: { work: WithSlug<Work> }) => {
           </dd>
           <dt className='sr-only'>Role</dt>
           <dd className='w-full text-xs text-zinc-500 dark:text-zinc-400'>
-            {work.title}
+            {work.roles?.at(-1)?.title}
           </dd>
         </dl>
       </li>
@@ -199,9 +199,8 @@ const Home = async () => {
               </h1>
               <p className='mt-6 text-base text-zinc-600 dark:text-zinc-400'>
                 Hi, I&apos;m Bailey 👋. I am a software engineer based in Morrinsville,
-                New Zealand. I&apos;m the founder and CEO of Planetaria, where we develop
-                technologies that empower regular people to explore space on their own
-                terms.
+                New Zealand. I build scalable, user‑centric digital experiences that solve
+                real‑world problems.
               </p>
               <div className='mt-6 flex justify-center gap-6'>
                 <SocialLinks />
@@ -238,7 +237,10 @@ const Home = async () => {
               }
             >
               {work.map((work) => (
-                <WorkCard key={`${work.company}-${work.title}`} work={work} />
+                <WorkCard
+                  key={`${work.company}-${work.roles?.at(-1)?.title}`}
+                  work={work}
+                />
               ))}
             </InfoBlock>
 

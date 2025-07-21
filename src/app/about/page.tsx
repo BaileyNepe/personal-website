@@ -4,12 +4,12 @@ import Image from 'next/image'
 import { Container } from '@/components/Container'
 
 import { SocialLinks } from '@/components/SocialLink'
-import portraitImage from '@/images/portrait.jpg'
+import portraitImage from '@/images/profile.webp'
 
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'I’m Bailey Nepe. I live in Morrinsville, New Zealand, where I design the future.'
+    "I'm Bailey Nepe. I live in Morrinsville, and I love building software that improves people's lives."
 }
 
 export default function About() {
@@ -28,33 +28,43 @@ export default function About() {
         </div>
         <div className='lg:order-first lg:row-span-2'>
           <h1 className='text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100'>
-            I’m Spencer Sharp. I live in New York City, where I design the future.
+            👋 I'm Bailey Nepe. I build scalable reliable software.
           </h1>
           <div className='mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400'>
             <p>
-              I’ve loved making things for as long as I can remember, and wrote my first
-              program when I was 6 years old, just two weeks after my mom brought home the
-              brand new Macintosh LC 550 that I taught myself to type on.
+              My journey into technology started from an unexpected place – the aviation
+              industry. After completing my Level 6 Diploma in Aviation at Waikato
+              Aviation, I spent several years as a flight instructor, eventually becoming
+              Deputy Chief Flying Instructor. Those years taught me precision, attention
+              to detail, and the importance of clear communication – skills that translate
+              surprisingly well to software development.
             </p>
             <p>
-              The only thing I loved more than computers as a kid was space. When I was 8,
-              I climbed the 40-foot oak tree at the back of our yard while wearing my
-              older sister’s motorcycle helmet, counted down from three, and jumped —
-              hoping the tree was tall enough that with just a bit of momentum I’d be able
-              to get to orbit.
+              The transition from aviation to tech wasn't immediate. I discovered my
+              passion for programming while looking for ways to solve operational
+              challenges in the flight training environment. What started as automating
+              simple tasks grew into a fascination with building comprehensive digital
+              solutions.
             </p>
             <p>
-              I spent the next few summers indoors working on a rocket design, while I
-              recovered from the multiple surgeries it took to fix my badly broken legs.
-              It took nine iterations, but when I was 15 I sent my dad’s Blackberry into
-              orbit and was able to transmit a photo back down to our family computer from
-              space.
+              I completed my Level 6 Diploma in Software Development at Developers
+              Institute, graduating with distinction. This formal education, combined with
+              my aviation background, gave me a unique perspective on building reliable,
+              user-focused applications where failure isn't an option.
             </p>
             <p>
-              Today, I’m the founder of Planetaria, where we’re working on civilian space
-              suits and manned shuttle kits you can assemble at home so that the next
-              generation of kids really <em>can</em> make it to orbit — from the comfort
-              of their own backyards.
+              Today, I work as a Software Engineer at NumberWorks'nWords, where I develop
+              educational technology solutions that help thousands of students across
+              Australia and New Zealand. I'm also actively developing Pilot Prep, an
+              advanced aviation training platform that combines my two worlds – bringing
+              modern educational technology to pilot training.
+            </p>
+            <p>
+              Whether I'm building multi-tenant platforms with AI integration or crafting
+              business management systems, I focus on creating scalable, user-centric
+              solutions that solve real problems. My aviation background reminds me that
+              great software, like great flying, requires careful planning, attention to
+              detail, and a commitment to continuous improvement.
             </p>
           </div>
         </div>
