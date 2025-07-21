@@ -9,6 +9,10 @@ export interface Project {
     image: string
     slug: string
     tags: string[]
+    date?: string
+    status?: 'in-progress' | 'completed' | 'archived'
+    priority?: 'high' | 'medium' | 'low'
+    completedDate?: string
 }
 
 export interface Work {
@@ -65,7 +69,23 @@ export const getAllProjects = async () =>
     getAllEntries<Project>({
         dir: 'projects',
         exportName: 'project',
-        sortFn: (a, b) => b.id - a.id,
+        sortFn: (a, b) => {
+            // First sort by status (in-progress first)
+            const statusOrder = { 'in-progress': 0, 'completed': 1, 'archived': 2 }
+            const statusDiff = (statusOrder[a.status || 'completed'] || 1) - (statusOrder[b.status || 'completed'] || 1)
+            if (statusDiff !== 0) return statusDiff
+
+            // Then by priority (high first)
+            const priorityOrder = { 'high': 0, 'medium': 1, 'low': 2 }
+            const priorityDiff = (priorityOrder[a.priority || 'medium'] || 1) - (priorityOrder[b.priority || 'medium'] || 1)
+            if (priorityDiff !== 0) return priorityDiff
+
+            // Finally by completion date (recent first) or id
+            if (a.completedDate && b.completedDate) {
+                return new Date(b.completedDate).getTime() - new Date(a.completedDate).getTime()
+            }
+            return a.id - b.id
+        },
     })
 
 export const getAllWork = async () =>

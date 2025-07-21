@@ -1,87 +1,118 @@
-import { Card } from '@/components/Card'
-import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
+import clsx from 'clsx'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { Card } from '@/components/Card'
+import { SimpleLayout } from '@/components/SimpleLayout'
+import { getAllProjects, type Project, type WithSlug } from '@/lib/slugImports'
 
-const projects = [
-  {
-    name: 'Planetaria',
-    description:
-      'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-    logo: logoPlanetaria
-  },
-  {
-    name: 'Animaginary',
-    description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoAnimaginary
-  },
-  {
-    name: 'HelioStream',
-    description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream
-  },
-  {
-    name: 'cosmOS',
-    description: 'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle
+const StatusBadge = ({ status, priority }: { status?: string; priority?: string }) => {
+  if (status === 'in-progress') {
+    return (
+      <span className='inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400'>
+        <span className='mr-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse'></span>
+        In Progress
+      </span>
+    )
   }
-]
 
-function LinkIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
+  if (status === 'completed') {
+    const priorityStyles = {
+      high: 'bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400',
+      medium: 'bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400',
+      low: 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
+    }
+
+    return (
+      <span
+        className={clsx(
+          'inline-flex items-center rounded-full px-3 py-1 text-xs font-medium',
+          priorityStyles[priority as keyof typeof priorityStyles] || priorityStyles.medium
+        )}
+      >
+        {priority === 'high' ? 'Iterative' : 'Completed'}
+      </span>
+    )
+  }
+
+  return null
+}
+
+const ProjectCard = ({ project }: { project: WithSlug<Project> }) => {
+  const isHighPriority = project.priority === 'high' || project.status === 'in-progress'
+
   return (
-    <svg viewBox='0 0 24 24' aria-hidden='true' {...props}>
-      <path
-        d='M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z'
-        fill='currentColor'
-      />
-    </svg>
+    <Card as='li'>
+      {project.image && (
+        <div className='relative z-10 mb-6 aspect-video w-full overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800'>
+          <Image
+            src={project.image}
+            alt={`${project.title} preview`}
+            fill
+            className='object-cover transition-transform duration-300 group-hover:scale-105'
+            sizes='(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
+          />
+        </div>
+      )}
+
+      <div className='flex items-start justify-between gap-2 mb-2'>
+        <h2
+          className={`font-semibold text-zinc-800 dark:text-zinc-100 ${isHighPriority ? 'text-lg' : 'text-base'}`}
+        >
+          <Card.Link href={`/projects/${project.slug}`}>{project.title}</Card.Link>
+        </h2>
+        <StatusBadge status={project.status} priority={project.priority} />
+      </div>
+
+      <Card.Description>{project.description}</Card.Description>
+
+      {project.completedDate && project.status === 'completed' && (
+        <p className='relative z-10 mt-2 text-xs text-zinc-500 dark:text-zinc-400'>
+          Completed{' '}
+          {new Date(project.completedDate).toLocaleDateString('en-NZ', {
+            year: 'numeric',
+            month: 'long'
+          })}
+        </p>
+      )}
+
+      {project.tags && project.tags.length > 0 && (
+        <div className='relative z-10 mt-4 flex flex-wrap gap-1'>
+          {project.tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className='inline-flex items-center rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
+            >
+              {tag}
+            </span>
+          ))}
+          {project.tags.length > 3 && (
+            <span className='inline-flex items-center rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500'>
+              +{project.tags.length - 3} more
+            </span>
+          )}
+        </div>
+      )}
+      <Card.Cta>View project</Card.Cta>
+    </Card>
   )
 }
 
 export const metadata: Metadata = {
   title: 'Projects',
-  description: 'All of my projects, collected in chronological order.'
+  description: ''
 }
 
 export default async function ProjectsIndex() {
+  const projects = await getAllProjects()
+
   return (
     <SimpleLayout
-      title='Things I’ve made trying to put my dent in the universe.'
-      intro='I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved.'
+      title="Things I've made"
+      intro="I work on projects that I'm passionate about with people who are passionate about them too. I prefer to work on real projects that have an impact on people's lives."
     >
       <ul className='grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3'>
         {projects.map((project) => (
-          <Card as='li' key={project.name}>
-            <div className='relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0'>
-              <Image src={project.logo} alt='' className='h-8 w-8' unoptimized />
-            </div>
-            <h2 className='mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100'>
-              <Card.Link href={project.link.href}>{project.name}</Card.Link>
-            </h2>
-            <Card.Description>{project.description}</Card.Description>
-            <p className='relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200'>
-              <LinkIcon className='h-6 w-6 flex-none' />
-              <span className='ml-2'>{project.link.label}</span>
-            </p>
-          </Card>
+          <ProjectCard key={project.slug} project={project} />
         ))}
       </ul>
     </SimpleLayout>

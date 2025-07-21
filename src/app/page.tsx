@@ -31,7 +31,16 @@ const ProjectCard = ({ project }: { project: WithSlug<Project> }) => {
           />
         </div>
       )}
-      <Card.Title href={`/projects/${project.slug}`}>{project.title}</Card.Title>
+
+      <div className='flex items-start justify-between gap-2 mb-2'>
+        <Card.Title href={`/projects/${project.slug}`}>{project.title}</Card.Title>
+        {project.status === 'in-progress' && (
+          <span className='inline-flex items-center rounded-full bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400'>
+            <span className='mr-1 h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse'></span>
+            Active
+          </span>
+        )}
+      </div>
 
       <Card.Description>{project.description}</Card.Description>
       {project.tags && project.tags.length > 0 && (
