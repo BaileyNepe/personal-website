@@ -15,18 +15,37 @@ export interface Project {
     completedDate?: string
 }
 
-export interface Work {
-    company: string
+export interface WorkRole {
     title: string
     startDate: string
     endDate?: string
+    description?: string
+}
+
+export interface Work {
+    company: string
+    logo: string
+    slug: string
+    startDate: string
+    endDate?: string
+    description: string
+    roles?: WorkRole[]
+    url?: string
+    location?: string
+    type?: 'full-time' | 'part-time' | 'contract' | 'internship'
 }
 
 export interface Education {
     qualification: string
     institution: string
+    logo: string
+    slug: string
     startDate: string
     endDate?: string
+    description: string
+    url?: string
+    location?: string
+    achievements?: string[]
 }
 
 // --- Helper types ---

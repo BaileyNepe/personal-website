@@ -1,0 +1,44 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import logoWaikatoAviation from '@/images/logos/waikato-aviation.webp'
+
+
+export const work = {
+  company: 'Waikato Aviation',
+  description: 'Premier flight training organisation providing comprehensive pilot training from private pilot to commercial airline pilot level.',
+  slug: 'waikato-aviation',
+  logo: logoWaikatoAviation,
+  startDate: '2016-01-01',
+  endDate: '2020-02-01',
+  url: 'https://waikatoaviation.co.nz',
+  location: 'Hamilton, New Zealand',
+  type: 'full-time',
+  roles: [
+    {
+      title: 'Flight Instructor',
+      startDate: '2016-01-01',
+      endDate: '2018-03-01',
+      description: 'Provided flight instruction for private and commercial pilot licences. Conducted ground school lessons and flight safety briefings.'
+    },
+    {
+      title: 'Senior Flight Instructor',
+      startDate: '2018-03-01',
+      endDate: '2019-06-01',
+      description: 'Led instructor development programmes and supervised junior instructors. Specialised in instrument rating and commercial pilot training.'
+    },
+    {
+      title: 'Deputy Chief Flying Instructor',
+      startDate: '2019-06-01',
+      endDate: '2020-02-01',
+      description: 'Managed flight operations, ensured regulatory compliance, and oversaw training standards for the organisation. Led a team of 15+ flight instructors.'
+    }
+  ]
+}
+
+export const metadata = {
+  title: work.title,
+  description: work.description,
+}
+
+export default (props) => <ProjectLayout project={work} {...props} />
+
+Coming soon...

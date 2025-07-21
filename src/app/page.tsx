@@ -1,4 +1,4 @@
-import Image, { type ImageProps } from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { Button } from '@/components/Button'
@@ -11,11 +11,17 @@ import { ChevronRightIcon } from '@/components/Icons/ChevronRightIcon'
 import { SchoolIcon } from '@/components/Icons/SchoolIcon'
 import { SocialLinks } from '@/components/SocialLink'
 import avatarImage from '@/images/avatar.webp'
-import logoDevelopersInstitute from '@/images/logos/developers-institute.webp'
-import logoNumberWorksNWords from '@/images/logos/nww.webp'
-import logoWaikatoAviation from '@/images/logos/waikato-aviation.webp'
-import { getAllProjects, type Project, type WithSlug } from '@/lib/slugImports'
+import {
+  type Education,
+  getAllEducation,
+  getAllProjects,
+  getAllWork,
+  type Project,
+  type WithSlug,
+  type Work
+} from '@/lib/slugImports'
 import { routes } from '@/utils/routes'
+import { formatDateYear } from '../lib/formatDate'
 
 const ProjectCard = ({ project }: { project: WithSlug<Project> }) => {
   return (
@@ -65,28 +71,21 @@ const ProjectCard = ({ project }: { project: WithSlug<Project> }) => {
   )
 }
 
-interface Role {
-  company: string
-  title: string
-  logo: ImageProps['src']
-  start: string | { label: string; dateTime: string }
-  end: string | { label: string; dateTime: string }
-  url: string
-}
+const WorkCard = ({ work }: { work: WithSlug<Work> }) => {
+  const startLabel = formatDateYear(work.startDate)
+  const startDate = formatDateYear(work.startDate)
 
-const Role = ({ role }: { role: Role }) => {
-  const startLabel = typeof role.start === 'string' ? role.start : role.start.label
-  const startDate = typeof role.start === 'string' ? role.start : role.start.dateTime
-
-  const endLabel = typeof role.end === 'string' ? role.end : role.end.label
-  const endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
+  const endLabel = work.endDate ? formatDateYear(work.endDate) : 'Present'
+  const endDate = work.endDate
+    ? formatDateYear(work.endDate)
+    : new Date().getFullYear().toString()
 
   return (
-    <Link href={role.url} className='block'>
+    <Link href={`${routes.work.path}/${work.slug}`} className='block'>
       <li className='group flex cursor-pointer gap-4'>
         <div className='relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0'>
           <Image
-            src={role.logo}
+            src={work.logo}
             alt=''
             className='h-7 w-7 rounded-full object-contain object-center'
             unoptimized
@@ -95,7 +94,7 @@ const Role = ({ role }: { role: Role }) => {
         <dl className='flex flex-auto flex-wrap gap-x-2'>
           <dt className='sr-only'>Company</dt>
           <dd className='flex flex-none items-center gap-2 text-sm font-medium text-zinc-900 transition-colors group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-300'>
-            {role.company}
+            {work.company}
             <ChevronRightIcon className='h-4 w-4 translate-x-[-8px] stroke-zinc-400 font-bold opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 dark:stroke-zinc-500' />
           </dd>
           <dt className='sr-only'>Date</dt>
@@ -105,7 +104,7 @@ const Role = ({ role }: { role: Role }) => {
           </dd>
           <dt className='sr-only'>Role</dt>
           <dd className='w-full text-xs text-zinc-500 dark:text-zinc-400'>
-            {role.title}
+            {work.title}
           </dd>
         </dl>
       </li>
@@ -113,46 +112,46 @@ const Role = ({ role }: { role: Role }) => {
   )
 }
 
-const resume: Array<Role> = [
-  {
-    company: "NumberWorks'nWords",
-    title: 'Software Engineer',
-    logo: logoNumberWorksNWords,
-    start: '2022',
-    end: {
-      label: 'Present',
-      dateTime: new Date().getFullYear().toString()
-    },
-    url: '/work/numberworksnwords'
-  },
-  {
-    company: 'Waikato Aviation',
-    title: 'Deputy Chief Flying Instructor',
-    logo: logoWaikatoAviation,
-    start: '2016',
-    end: '2020',
-    url: '/work/waikato-aviation'
-  }
-]
+const EducationCard = ({ education }: { education: WithSlug<Education> }) => {
+  const startLabel = formatDateYear(education.startDate)
+  const startDate = formatDateYear(education.startDate)
 
-const roles: Role[] = [
-  {
-    company: 'Developers Institute',
-    title: 'Level 6 Diploma in Software Development',
-    logo: logoDevelopersInstitute,
-    start: '2021',
-    end: '2022',
-    url: '/education/developers-institute'
-  },
-  {
-    company: 'Waikato Aviation',
-    title: 'Level 6 Diploma in Aviation',
-    logo: logoWaikatoAviation,
-    start: '2015',
-    end: '2016',
-    url: '/education/waikato-aviation'
-  }
-]
+  const endLabel = education.endDate ? formatDateYear(education.endDate) : 'Present'
+  const endDate = education.endDate
+    ? formatDateYear(education.endDate)
+    : new Date().getFullYear().toString()
+
+  return (
+    <Link href={`${routes.education.path}/${education.slug}`} className='block'>
+      <li className='group flex cursor-pointer gap-4'>
+        <div className='relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0'>
+          <Image
+            src={education.logo}
+            alt=''
+            className='h-7 w-7 rounded-full object-contain object-center'
+            unoptimized
+          />
+        </div>
+        <dl className='flex flex-auto flex-wrap gap-x-2'>
+          <dt className='sr-only'>Institution</dt>
+          <dd className='flex flex-none items-center gap-2 text-sm font-medium text-zinc-900 transition-colors group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-300'>
+            {education.institution}
+            <ChevronRightIcon className='h-4 w-4 translate-x-[-8px] stroke-zinc-400 font-bold opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 dark:stroke-zinc-500' />
+          </dd>
+          <dt className='sr-only'>Date</dt>
+          <dd className='ml-auto text-xs text-zinc-400 dark:text-zinc-500'>
+            <time dateTime={startDate}>{startLabel}</time>{' '}
+            <span aria-hidden='true'>—</span> <time dateTime={endDate}>{endLabel}</time>
+          </dd>
+          <dt className='sr-only'>Qualification</dt>
+          <dd className='w-full text-xs text-zinc-500 dark:text-zinc-400'>
+            {education.qualification}
+          </dd>
+        </dl>
+      </li>
+    </Link>
+  )
+}
 
 const InfoBlock = ({
   children,
@@ -179,7 +178,8 @@ const InfoBlock = ({
 
 const Home = async () => {
   const projects = (await getAllProjects()).slice(0, 2)
-
+  const work = await getAllWork()
+  const education = await getAllEducation()
   return (
     <>
       <Container className='mt-12 md:mt-24'>
@@ -195,7 +195,7 @@ const Home = async () => {
             </div>
             <div>
               <h1 className='text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100'>
-                Software Engineer, founder, and amateur astronaut.
+                Software Engineer
               </h1>
               <p className='mt-6 text-base text-zinc-600 dark:text-zinc-400'>
                 Hi, I&apos;m Bailey 👋. I am a software engineer based in Morrinsville,
@@ -237,8 +237,8 @@ const Home = async () => {
                 </Button>
               }
             >
-              {resume.map((role) => (
-                <Role key={`${role.company}-${role.title}`} role={role} />
+              {work.map((work) => (
+                <WorkCard key={`${work.company}-${work.title}`} work={work} />
               ))}
             </InfoBlock>
 
@@ -247,8 +247,11 @@ const Home = async () => {
               title='Education'
               icon={<SchoolIcon className='h-6 w-6 flex-none' />}
             >
-              {roles.map((role) => (
-                <Role key={`${role.company}-${role.title}`} role={role} />
+              {education.map((education) => (
+                <EducationCard
+                  key={`${education.institution}-${education.qualification}`}
+                  education={education}
+                />
               ))}
             </InfoBlock>
           </div>

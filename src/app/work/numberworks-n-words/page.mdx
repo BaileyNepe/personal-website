@@ -1,0 +1,36 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import logoNumberWorksNWords from '@/images/logos/nww.webp'
+
+
+export const work = {
+  company: 'NumberWorks\'nWords',
+  description: 'Leading educational technology company specialising in mathematics and English tutoring with over 100 centres across Australia and New Zealand.',
+  slug: 'numberworks-n-words',
+  logo: logoNumberWorksNWords,
+  startDate: '2022-05-09',
+  url: 'https://numberworksnwords.com',
+  location: 'Auckland, New Zealand',
+  type: 'full-time',
+  roles: [
+    {
+      title: 'Junior Software Engineer',
+      startDate: '2022-05-09',
+      endDate: '2023-06-01',
+      description: 'Developed and maintained educational software applications using React, Node.js, and PostgreSQL. Collaborated with product teams to implement new features for student learning platforms.'
+    },
+    {
+      title: 'Software Engineer',
+      startDate: '2023-06-01',
+      description: 'Led development of key platform features, mentored junior developers, and architected scalable solutions for multi-tenant educational applications serving thousands of students.'
+    }
+  ]
+}
+
+export const metadata = {
+  title: work.title,
+  description: work.description,
+}
+
+export default (props) => <ProjectLayout project={work} {...props} />
+
+Coming soon...
