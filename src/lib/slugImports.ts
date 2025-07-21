@@ -11,15 +11,15 @@ export interface Project {
 export interface Work {
     company: string
     title: string
-    start: number
-    end?: number
+    startDate: string
+    endDate?: string
 }
 
 export interface Education {
     qualification: string
     institution: string
-    start: number
-    end?: number
+    startDate: string
+    endDate?: string
 }
 
 // --- Helper types ---
@@ -68,11 +68,11 @@ export const getAllProjects = async () =>
 export const getAllWork = async () =>
     getAllEntries<Work>({
         dir: 'work',
-        sortFn: (a, b) => b.start - a.start,
+        sortFn: (a, b) => +new Date(b.startDate) - +new Date(a.startDate),
     })
 
 export const getAllEducation = async () =>
     getAllEntries<Education>({
         dir: 'education',
-        sortFn: (a, b) => b.start - a.start,
+        sortFn: (a, b) => +new Date(b.startDate) - +new Date(a.startDate),
     })

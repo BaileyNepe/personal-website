@@ -18,7 +18,7 @@ import { formatDate } from '@/lib/formatDate'
 import { getAllProjects, type Project, type WithSlug } from '@/lib/slugImports'
 import { routes } from '@/utils/routes'
 
-const Project = ({ project }: { project: WithSlug<Project> }) => {
+const ProjectCard = ({ project }: { project: WithSlug<Project> }) => {
   return (
     <Card as='article'>
       <Card.Title href={`/projects/${project.slug}`}>{project.title}</Card.Title>
@@ -185,7 +185,7 @@ const Home = async () => {
         <div className='mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2'>
           <div className='flex flex-col gap-16'>
             {projects.map((project) => (
-              <Project key={project.slug} project={project} />
+              <ProjectCard key={project.slug} project={project} />
             ))}
             <Button
               href={routes.projects.path}
