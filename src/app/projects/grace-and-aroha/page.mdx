@@ -1,0 +1,27 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import featureImage from './feature.webp'
+
+export const project = {
+  id: 3,
+  title: 'Grace & Aroha',
+  description: 'A comprehensive parenting support platform connecting early childhood education with postnatal doula services. Built with Strapi CMS and Next.js for optimal SEO performance through static generation and webhook-triggered builds.',
+  image: featureImage,
+  slug: 'grace-and-aroha',
+  tags: ['Next.js', 'Strapi CMS', 'TypeScript', 'PostgreSQL', 'SEO', 'Static Generation', 'Webhooks'],
+  status: 'completed',
+  priority: 'low',
+  completedDate: '2021-06-01',
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description,
+}
+
+export default (props) => <ProjectLayout project={project} {...props} />
+
+Coming soon...
+
+<Image src={featureImage} alt="Grace & Aroha feature image" />
+
+Visit the <a href="https://graceandaroha.co.nz" target="_blank" rel="noopener noreferrer">Grace & Aroha website</a> to see the live site.

@@ -1,0 +1,30 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import featureImage from './feature.webp'
+
+
+export const project = {
+  id: 1,
+  title: 'Pilot Prep',
+  description: 'An advanced aviation training platform featuring interactive courses with custom markdown directives, AI-powered learning assistance, comprehensive assessments with detailed progress reporting, and sophisticated testing capabilities. Includes real-time forums, advanced note-taking, and optimised content delivery through AWS CloudFront.',
+  image: featureImage,
+  slug: 'pilot-prep',
+  tags: ['Multi-tenant', 'AI Integration', 'Custom Markdown', 'Websockets', 'AWS CloudFront', 'Redis Caching', 'Interactive Learning', 'Progress Tracking', 'Real-time Chat'],
+  status: 'in-progress',
+  priority: 'high',
+  date: '2024-01-15',
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description,
+}
+
+export default (props) => <ProjectLayout project={project} {...props} />
+
+Coming soon...
+
+<Image src={featureImage} alt="Pilot Prep feature image" />
+
+Visit the <a href="https://pilotprep.co.nz" target="_blank" rel="noopener noreferrer">Pilot Prep website</a> to see the live site.
+
+*This project is still being actively developed and no courses are currently available to the public.*

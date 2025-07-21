@@ -1,0 +1,29 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import featureImage from './feature.webp'
+
+export const project = {
+  id: 2,
+  title: 'Dreams Built',
+  description: 'A comprehensive business management platform for construction companies featuring project tracking, timesheet management, automated job & payroll reporting, file storage, staff forums, and custom weekly calendars for improved efficiency and planning.',
+  image: featureImage,
+  slug: 'dreams-built',
+  tags: ['React', 'TypeScript', 'PostgreSQL', 'Node.js', 'Express', 'Project Management', 'Reporting', 'Railway'],
+  status: 'completed',
+  priority: 'high',
+  completedDate: '2024-03-01',
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description,
+}
+
+export default (props) => <ProjectLayout project={project} {...props} />
+
+Coming soon...
+
+<Image src={featureImage} alt="Dreams Built feature image" />
+
+Visit the <a href="https://dreamsbuilt.co.nz" target="_blank" rel="noopener noreferrer">Dreams Built website</a> to see the live site.
+
+*This project is for Dreams Built Limited and the primary function is behind Authentication and Authorization which is not publicly available.*

@@ -1,0 +1,31 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import logoDevelopersInstitute from '@/images/logos/developers-institute.webp'
+
+
+export const education = {
+  qualification: 'Level 6 Diploma in Software Development',
+  institution: 'Developers Institute',
+  slug: 'developers-institute',
+  startDate: '2021-02-01',
+  logo: logoDevelopersInstitute,
+  endDate: '2022-10-01',
+  location: 'Whangarei, New Zealand (Remote)',
+  description: 'Comprehensive software development programme covering full-stack web development, database design, and modern development practices.',
+  achievements: [
+    'Graduated with Distinction (top 10% of cohort)',
+    'Built and deployed 5+ full-stack applications',
+    'Completed industry placement with NumberWorks\'nWords',
+    'Specialised in React, Node.js, Docker, and PostgreSQL'
+  ]
+}
+
+export const metadata = {
+  title: education.title,
+  description: education.description,
+}
+
+export default (props) => <ProjectLayout project={education} {...props} />
+
+Coming soon...
+
+

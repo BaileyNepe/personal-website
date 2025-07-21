@@ -1,0 +1,32 @@
+import { ProjectLayout } from '@/components/ProjectLayout'
+import logoWaikatoAviation from '@/images/logos/waikato-aviation.webp'
+
+
+export const education = {
+  qualification: 'Level 6 Diploma in Aviation',
+  institution: 'Waikato Aviation',
+  slug: 'waikato-aviation',
+  startDate: '2015-02-01',
+  logo: logoWaikatoAviation,
+  endDate: '2016-10-01',
+  location: 'Hamilton, New Zealand',
+  description: 'Professional pilot training programme covering theory of flight, navigation, meteorology, and aviation regulations leading to Commercial Pilot Licence.',
+  achievements: [
+    'Completed Commercial Pilot Licence (CPL)',
+    'Multi-Engine Instrument Rating (MEIR) qualification',
+    'Flight Instructor Rating (FI)',
+    'Accumulated 250+ flight hours',
+    'Aviation English Language Proficiency Level 6'
+  ]
+}
+
+export const metadata = {
+  title: education.title,
+  description: education.description,
+}
+
+export default (props) => <ProjectLayout project={education} {...props} />
+
+Coming soon...
+
+Visit <a href="https://waikatoaviation.co.nz" target="_blank" rel="noopener noreferrer">Waikato Aviation website</a>.
