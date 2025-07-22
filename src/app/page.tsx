@@ -10,6 +10,7 @@ import { BriefcaseIcon } from '@/components/Icons/BriefcaseIcon'
 import { ChevronRightIcon } from '@/components/Icons/ChevronRightIcon'
 import { SchoolIcon } from '@/components/Icons/SchoolIcon'
 import { SocialLinks } from '@/components/SocialLink'
+import { TechStack } from '@/components/TechStack'
 import avatarImage from '@/images/avatar.webp'
 import {
   type Education,
@@ -209,7 +210,12 @@ const Home = async () => {
           </div>
         </div>
       </Container>
-      <Container className='mt-24 md:mt-28'>
+
+      <div className='mt-16'>
+        <TechStack />
+      </div>
+
+      <Container className='mt-16 md:mt-20'>
         <div className='mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2'>
           <div className='flex flex-col gap-16'>
             {projects.map((project) => (
