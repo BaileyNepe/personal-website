@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://baileynepe.com'),
   title: {
     template: '%s - Bailey Nepe',
-    default: 'Bailey Nepe - Software engineer'
+    default: 'Bailey Nepe - Full-Stack Solutions Engineer'
   },
   description:
-    'I’m Bailey, a software engineer based in Morrinsville, New Zealand. I build scalable reliable software.',
+    'Full-Stack Solutions Engineer who architects end-to-end technical solutions that drive business impact. Specialising in React, Node.js, TypeScript, and AWS to build scalable, high-performance systems.',
   alternates: {
     types: {
       'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`

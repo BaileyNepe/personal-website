@@ -196,12 +196,15 @@ const Home = async () => {
             </div>
             <div>
               <h1 className='text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100'>
-                Software Engineer
+                Full-Stack Solutions Engineer
               </h1>
               <p className='mt-6 text-base text-zinc-600 dark:text-zinc-400'>
-                Hi, I&apos;m Bailey 👋. I am a software engineer based in Morrinsville,
-                New Zealand. I build scalable, user‑centric digital experiences that solve
-                real‑world problems.
+                Hi, I&apos;m Bailey 👋. I architect end-to-end technical solutions that
+                solve real business problems. From transforming critical infrastructure to
+                optimising performance from seconds to milliseconds, I build scalable,
+                reliable systems using React, Node.js, TypeScript, and AWS. I specialise
+                in identifying inefficiencies and delivering comprehensive solutions that
+                drive measurable business impact.
               </p>
               <div className='mt-6 flex justify-center gap-6'>
                 <SocialLinks />
