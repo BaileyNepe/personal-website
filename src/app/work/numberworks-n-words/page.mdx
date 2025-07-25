@@ -1,8 +1,11 @@
 import { ProjectLayout } from '@/components/ProjectLayout'
 import logoNumberWorksNWords from '@/images/logos/nww.webp'
+import Image from 'next/image'
+import feature from './feature.png'
 
 export const work = {
   company: 'NumberWorks\'nWords',
+  title: 'NumberWorks\'nWords',
   description: 'Leading educational technology company specialising in mathematics and English tutoring with over 100 centres across Australia and New Zealand, serving thousands of students aged 5-16.',
   slug: 'numberworks-n-words',
   logo: logoNumberWorksNWords,
@@ -30,15 +33,18 @@ export const metadata = {
   description: work.description,
 }
 
-export default (props) => <ProjectLayout project={work} {...props} />
+export default (props) => <ProjectLayout project={work} {...props} />;
 
 # NumberWorks'nWords: Transforming Educational Technology
+
+
+<Image src={feature} alt="NumberWorks'nWords feature" />
 
 A journey of technical growth and infrastructure transformation at New Zealand's leading educational technology company, where I evolved from a junior developer to a key technical contributor driving platform modernisation and performance optimisation.
 
 ## Company Overview
 
-NumberWorks'nWords operates as a franchise-based tutoring organisation across Australia and New Zealand, combining traditional in-centre learning with modern cloud-based education technology. The platform serves:
+NumberWorks'nWords operates as a franchise-based tutoring organisation across Australia and New Zealand and the United Kingdom, combining traditional in-centre learning with modern cloud-based education technology. The platform serves:
 
 - **70+ franchise centres** with unique operational requirements
 - **Thousands of students** aged 5-16 across mathematics and English
@@ -51,32 +57,33 @@ NumberWorks'nWords operates as a franchise-based tutoring organisation across Au
 
 **The Challenge:** 
 
-Walking into NumberWorks'nWords, I discovered a platform serving thousands of students across 70+ centres was hanging by a thread. The entire system ran on a single EC2 instance, and deployments were literally a game of Russian roulette—someone would manually drag and drop files, hold their breath, and hope nothing broke. When things inevitably went wrong (and they did, regularly), frustrated tutors couldn't access student progress, parents couldn't see their children's achievements, and our support team fielded angry calls from franchise owners watching their businesses grind to a halt.
+NumberWorks'nWords operated successfully with their established franchise-based model across 70+ centres. When COVID-19 struck, there was an urgent need to rapidly deploy a cloud-based solution that could work alongside existing in-centre servers while serving remote students. The initial cloud infrastructure was quickly stood up on a large, under-utilised EC2 instance to meet immediate pandemic demands, but this created cost inefficiencies and operational challenges.
 
-The most heartbreaking part wasn't the technical debt—it was seeing the impact on students. When the platform crashed during peak tutoring hours, kids who had been building momentum in their learning journey suddenly hit a wall. That's not just a technical failure; that's a barrier to education, and it was happening far too often.
+The deployment process involved manual file transfers, which led to inconsistent builds and frequent deployment issues. Load patterns were sporadic and unpredictable as the platform adapted to the new hybrid learning model, requiring a more resilient and cost-effective infrastructure approach.
 
 **My Solution:**
 
-I knew we needed more than a quick fix—this called for a complete reimagining of how we delivered education technology. The transformation began with containerising the entire application using Docker, creating isolated, predictable environments that behaved identically whether running on my laptop or serving thousands of students in production.
+I conducted a comprehensive system analysis, collaborating with stakeholders across the organisation to understand both technical requirements and business constraints. After aligning everyone on the vision, I architected a solution that addressed immediate cost concerns while building a foundation for long-term scalability. The transformation began with containerising the entire application using Docker, creating consistent, reproducible environments that could seamlessly sync between cloud and in-centre deployments.
 
 ```yaml
 # Docker containerisation with multi-stage builds
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
+RUN npm run build
 
 FROM node:18-alpine AS runtime
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
 COPY . .
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["pm2", "start", "dist/server.js", "--name", "numberworks-n-words"]
 ```
 
-The migration to AWS ECS transformed our deployment story from nail-biting manual processes to seamless, automated releases. I implemented auto-scaling and load balancing, so the platform could gracefully handle everything from quiet Sunday afternoons to the chaos of exam week when hundreds of students log in simultaneously. CloudFront integration meant students in rural areas could access content just as quickly as those in major cities, while the migration to Amazon RDS gave us bulletproof data reliability with automated backups that actually worked.
+The migration to AWS ECS enabled automated, zero-downtime deployments with auto-scaling and load balancing capabilities. This ensured the platform could gracefully handle varying loads, from quiet periods to high-traffic exam weeks when hundreds of students access content simultaneously. CloudFront integration improved content delivery speed for students across different geographical locations, while the migration to Amazon RDS enhanced data reliability with automated backups.
 
-Perhaps most importantly, I built a comprehensive CI/CD pipeline using GitHub Actions. Now, every code change goes through rigorous automated testing before reaching students, and deployments happen with the confidence that comes from knowing the system has been thoroughly validated.
+Building on the existing automated testing foundation, I optimised the CI/CD pipeline using GitHub Actions, reducing test execution time while improving reliability. This enhanced deployment pipeline ensured every code change was thoroughly validated before reaching production, providing confidence in the stability of updates.
 
 **Measurable Impact:**
 - **Deployment time:** Reduced from 45 minutes to 5 minutes
@@ -95,26 +102,47 @@ Critical dashboard loading performance was severely impacting user experience:
 
 **My Technical Solutions:**
 
-#### Redis Caching Implementation
+#### Multi-Layered Caching Architecture
 ```javascript
-// Intelligent caching with automatic invalidation
-const getCachedStudentProgress = async (studentId) => {
-  const cacheKey = `student:${studentId}:progress`;
+// Hybrid caching system with Redis and local cache layers
+export const removeFromCacheLayer = async (params) => {
+  await cache().entities.remove(params);
   
-  let cached = await redis.get(cacheKey);
-  if (cached) return JSON.parse(cached);
-  
-  const progress = await calculateStudentProgress(studentId);
-  await redis.setex(cacheKey, 3600, JSON.stringify(progress));
-  
-  return progress;
+  if (conditionalCheck(params)) {
+    notifyRelatedSystems(params);
+  }
+  triggerCacheSync(params);
 };
 
-// WebSocket partial updates for real-time sync
-const invalidateCache = async (studentId, updates) => {
-  await redis.del(`student:${studentId}:progress`);
-  wsServer.emit(`student:${studentId}:update`, updates);
+export const clearCacheByScope = async (scopeId) => {
+  const cacheLayer = cache().scopedData;
+  return cacheLayer.clear(scopeId);
 };
+
+export const removeFromMultipleCaches = async (params) => {
+  await cache().primaryData.delete(params);
+  await removeFromCacheLayer(params);
+};
+
+// Cache abstraction layer supporting multiple cache types
+const cache = () => ({
+  primaryData: {
+    clear: (id) => Promise.all([
+      redisCache.clear(`scope:${id}:data`),
+      localCache.clear(`data:${id}`)
+    ]),
+    delete: (params) => Promise.all([
+      redisCache.del(`entity:${params.id}`),
+      localCache.del(`local:${params.id}`)
+    ])
+  },
+  entities: {
+    remove: (params) => Promise.all([
+      redisCache.srem(`collection:${params.scope}`, params.id),
+      localCache.invalidate(`entities:${params.scope}`)
+    ])
+  }
+});
 ```
 
 #### Database Optimisation
@@ -124,7 +152,7 @@ const invalidateCache = async (studentId, updates) => {
 - **CTE implementation:** Used Common Table Expressions for complex reporting
 
 ```sql
--- Optimised student progress query with CTE
+-- A simplified example of an optimised student progress query with CTE
 WITH student_activities AS (
   SELECT 
     student_id,
@@ -181,45 +209,28 @@ const LazyStudentProgress = lazy(() =>
 
 **Advanced Compression Implementation:**
 - **Brotli compression:** Implemented for API responses reducing bandwidth by 40%
-- **Asset optimisation:** WebP image conversion with fallbacks
 - **Bundle splitting:** Route-based code splitting reducing initial load
+- **Image optimisation:** WebP image conversion with fallbacks
 
 ### 🔧 DevOps & Quality Assurance
 
 **Staging Environment Creation:**
-Established production-mirror staging environment enabling:
+Established production-mirror staging and alpha environments enabling:
 - **Safe feature testing** before production deployment
 - **Data consistency** with automated production data sync
 - **Performance testing** under realistic load conditions
 - **Cross-browser testing** across multiple devices
 
-**Monitoring & Alerting:**
-```javascript
-// Health check endpoints with detailed metrics
-app.get('/health', async (req, res) => {
-  const dbStatus = await checkDatabaseConnection();
-  const redisStatus = await checkRedisConnection();
-  const memoryUsage = process.memoryUsage();
-  
-  res.json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    services: { database: dbStatus, cache: redisStatus },
-    memory: memoryUsage
-  });
-});
-```
 
 ## Leadership & Mentorship
 
 ### 👥 Junior Developer Mentorship
-- **Pair programming sessions:** Weekly 1-on-1 technical guidance
-- **Code review leadership:** Established thorough review processes improving code quality
-- **Onboarding development:** Created structured 2-week onboarding program
+- **Pair programming sessions:** Pair programmed with the junior developer to help them understand the codebase and improve their skills
+- **Code review:** Reviewed code with the team to ensure quality and consistency
 - **Technical documentation:** Wrote comprehensive guides for complex platform features
 
 ### 🎯 Cross-Functional Collaboration
-- **Stakeholder requirements gathering:** Led requirement sessions with product managers
+- **Stakeholder requirements gathering:** reached out to stakeholders to understand their needs and requirements
 - **Solution architecture:** Presented technical solutions to non-technical stakeholders
 - **Bug triage leadership:** Coordinated rapid response for production issues
 - **Knowledge sharing:** Conducted technical presentations on platform improvements
@@ -252,12 +263,12 @@ const MathProblem = ({ equation, hints, solution }) => {
 ### Platform Architecture Documentation
 - Mapped complex deployment differences between cloud and franchise environments
 - Created system architecture diagrams improving team understanding
-- Documented API integration patterns for third-party developers
+- Documented API integration patterns
 
 ## Technical Skills Demonstrated
 
 ### Backend Technologies
-- **Node.js & Express:** RESTful API development and middleware creation
+- **Node.js & Koa:** RESTful API development and middleware creation
 - **PostgreSQL:** Advanced querying, indexing, and performance optimisation
 - **Redis:** Caching strategies and session management
 - **AWS Services:** ECS, RDS, CloudFront, S3, and IAM configuration
@@ -265,8 +276,8 @@ const MathProblem = ({ equation, hints, solution }) => {
 ### Frontend Development
 - **React:** Component optimisation, hooks, and context management
 - **Performance:** Bundle optimisation, lazy loading, and caching strategies
-- **Testing:** Unit testing with Jest and integration testing
-- **Build Tools:** Webpack configuration and optimisation
+- **Testing:** Unit testing with Vitest and integration testing
+- **Build Tools:** Vite configuration and optimisation
 
 ### DevOps & Infrastructure
 - **Docker:** Multi-stage builds and container optimisation

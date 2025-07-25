@@ -214,7 +214,7 @@ const Home = async () => {
         </div>
       </Container>
 
-      <div className='mt-16'>
+      <div className='mt-14'>
         <TechStack />
       </div>
 
@@ -239,7 +239,13 @@ const Home = async () => {
               icon={<BriefcaseIcon className='h-6 w-6 flex-none' />}
               title='Work'
               cta={
-                <Button href='#' variant='secondary' className='group mt-6 w-full'>
+                <Button
+                  href='/Bailey_Nepe__CV.pdf'
+                  variant='secondary'
+                  className='group mt-6 w-full'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   Download CV
                   <ArrowDownIcon className='h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50' />
                 </Button>

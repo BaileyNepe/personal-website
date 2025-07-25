@@ -1,5 +1,10 @@
 import { ProjectLayout } from '@/components/ProjectLayout'
 import featureImage from './feature.webp'
+import img1 from './carousel/img-1.png'
+import img2 from './carousel/img-2.png'
+import img3 from './carousel/img-3.png'
+import img4 from './carousel/img-4.png'
+import img5 from './carousel/img-5.png'
 
 export const project = {
   id: 2,
@@ -28,9 +33,22 @@ A full-stack web application that eliminated paper-based timesheet collection an
 
 <Image src={featureImage} alt="Dreams Built dashboard showing job management and timesheet overview" />
 
+## Platform Screenshots
+
+Take a look at the Dreams Built platform in action:
+
+<ImageCarousel 
+  images={[img1, img2, img3, img4, img5]} 
+  alt="Dreams Built platform interface"
+  autoSlideInterval={5000}
+  showDots
+  aspectRatio="video"
+  className="my-8"
+/>
+
 ## The Problem
 
-Watching my father run his construction business was like watching someone try to juggle while riding a unicycle—impressive, but unsustainable. Every Friday became a frantic treasure hunt across Hamilton, driving from site to site collecting crumpled paper timesheets from muddy trucks and toolboxes. By the time he'd gathered everyone's hours, half the day was gone, and he'd spend the evening hunched over a calculator, trying to piece together which jobs were making money and which were bleeding cash.
+Watching my father run his construction business was like watching someone try to juggle while riding a unicycle—impressive, but unsustainable. Every Wednesday became a frantic treasure hunt across Hamilton, driving from site to site collecting crumpled paper timesheets from muddy trucks and toolboxes. By the time he'd gathered everyone's hours, half the day was gone, and he'd spend the evening hunched over a calculator, trying to piece together which jobs were making money and which were bleeding cash.
 
 The mental toll was what really got to me. Here was someone who could build anything, solve complex construction challenges, and manage teams of skilled tradies, but he was drowning in paperwork. Late nights were spent staring at spreadsheets, trying to remember if that job in Te Awamutu was supposed to take two days or three, and whether the cost overrun was due to weather delays or poor planning. The business was successful, but it was consuming him, and I knew there had to be a better way.
 
@@ -47,27 +65,7 @@ Built initial version during my studies at Developers Institute, focusing on cor
 ### Version 2.0: Complete Redesign & Enhancement
 **Upgraded Tech Stack:** TypeScript, TRPC, PostgreSQL, enhanced AWS infrastructure
 
-Rebuilt from the ground up with lessons learned and modern technologies:
-
-```typescript
-// Example of type-safe job costing calculation
-const calculateJobProfitability = async (jobId: string) => {
-  const job = await db.job.findUnique({
-    where: { id: jobId },
-    include: {
-      timesheets: { include: { employee: true } },
-      materials: true,
-      expenses: true
-    }
-  });
-  
-  const laborCost = job.timesheets.reduce((total, timesheet) => 
-    total + (timesheet.hours * timesheet.employee.hourlyRate), 0
-  );
-  
-  return job.budgetAmount - laborCost - materialCosts - expenses;
-};
-```
+Rebuilt from the ground up with lessons learned and modern technologies.
 
 ## Key Features & Impact
 
@@ -79,31 +77,21 @@ What amazed me most was watching the ripple effects. Payroll processing, which u
 
 ### 📊 Real-Time Job Costing
 **Before:** Mental estimates and end-of-project surprises
-**After:** Live profitability tracking with detailed breakdowns
+**After:** Real-time job profitability tracking
 
 **Features Delivered:**
 - Automatic labor cost calculation based on employee rates and hours
-- Material cost tracking with vendor integration
-- Real-time profit/loss indicators with early warning alerts
-- Historical job performance analysis for better bidding
+
 
 ### 📅 Intelligent Scheduling System
+
 **Before:** Phone calls and confusion about daily assignments
 **After:** Centralised calendar with automatic notifications
 
 **Functionality:**
 - Drag-and-drop job assignment interface
-- Automated SMS notifications for schedule changes
 - Employee availability tracking
-- Weather-based rescheduling suggestions
 
-### 📈 Business Intelligence Dashboard
-Comprehensive reporting system providing actionable insights:
-
-- Job profitability trends over time
-- Employee productivity metrics
-- Cost variance analysis comparing estimated vs. actual
-- Cash flow projections based on scheduled work
 
 ## Technical Highlights
 
@@ -114,7 +102,6 @@ Comprehensive reporting system providing actionable insights:
 - ACID compliance for financial calculations
 
 ### Authentication & Security
-- Multi-factor authentication for sensitive financial data
 - Role-based permissions (Owner, Foreman, Employee)
 - Audit trails for all timesheet and job modifications
 
@@ -122,13 +109,6 @@ Comprehensive reporting system providing actionable insights:
 Integrated document storage for:
 - Construction plans and blueprints
 - Progress photos with automatic compression
-- Invoice and receipt management
-- Equipment rental agreements
-
-### Performance Optimisation
-- Implemented Redis caching for frequently accessed job data
-- Optimised SQL queries reducing dashboard load time from 3s to 200ms
-- Progressive web app capabilities for offline timesheet entry
 
 ## Business Transformation
 
@@ -140,7 +120,7 @@ Integrated document storage for:
 ### Financial Visibility
 - **Real-time job profitability** enabling mid-project corrections
 - **15% improvement** in overall job margins through better cost control
-- **Faster invoicing** with automated time and material compilation
+- **Faster invoicing** with automated time compilation
 
 ### Employee Satisfaction
 - **Simplified timesheet submission** via mobile devices
@@ -152,20 +132,18 @@ Integrated document storage for:
 ### Deployment Strategy
 - **Version 1.0:** AWS Elastic Beanstalk with automated scaling
 - **Version 2.0:** Dockerised deployment on Railway with CI/CD pipeline
-- **Database:** Amazon RDS PostgreSQL with automated backups
+- **Database:** PostgreSQL with automated backups
 - **Storage:** AWS S3 for file management with CloudFront CDN
 
 ### Code Quality Improvements
 - Migrated from JavaScript to TypeScript for better type safety
 - Implemented TRPC for end-to-end type safety
-- Added comprehensive unit and integration testing
 - Established ESLint and Prettier for consistent code formatting
 
 ## Links
 
 - 🌐 **Live Application:** [dreamsbuilt.co.nz](https://dreamsbuilt.co.nz)
 - 🔐 **Demo Access:** Available upon request
-- 📊 **Case Study:** Full business impact analysis available
 
 ---
 
