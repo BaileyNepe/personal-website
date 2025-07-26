@@ -66,9 +66,9 @@ export default function About() {
               students across 70+ franchise centres. I led a complete infrastructure
               transformation—migrating from a fragile single EC2 instance to a scalable,
               containerised AWS ECS environment. This resulted in 99.9% uptime, 45-minute
-              to 5-minute deployment times, and dashboard performance improvements from
-              10+ seconds to 100ms. These technical improvements directly translated to
-              better tutor productivity and enhanced student learning experiences.
+              to 5-minute deployment times, and dashboard load time improvements from 10+
+              seconds to 100ms. These technical improvements directly translated to better
+              tutor productivity and enhanced student learning experiences.
             </p>
             <p>
               Beyond my full-time role, I develop comprehensive solutions for diverse

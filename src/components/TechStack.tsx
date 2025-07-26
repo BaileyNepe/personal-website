@@ -16,7 +16,7 @@ const techStack: { name: string; slug: string; icon?: string }[] = [
   { name: 'Railway', slug: 'railway' },
   { name: 'Node.js', slug: 'nodedotjs' },
   { name: 'Bun', slug: 'bun', icon: bunLogo },
-  { name: 'Go', slug: 'go' },
+  // { name: 'Go', slug: 'go' },
   { name: 'React', slug: 'react' },
   { name: 'Redux', slug: 'redux' },
   { name: 'React Query', slug: 'reactquery' },
