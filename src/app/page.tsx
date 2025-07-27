@@ -185,7 +185,7 @@ const Home = async () => {
     <>
       <Container className='mt-12 md:mt-24'>
         <div className='max-w-2xl lg:max-w-5xl'>
-          <div className='flex flex-col items-center gap-8 text-center'>
+          <div className='flex flex-col items-center gap-8 md:text-center'>
             <div className='flex justify-center'>
               <Image
                 src={avatarImage}
