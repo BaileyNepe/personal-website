@@ -61,15 +61,15 @@ export default function About() {
               failure isn't an option.
             </p>
             <p>
-              I'm now a Backend Engineer on the AI team at Atlassian, where I work on Rovo
-              Chat — an AI-powered assistant that helps teams find information and get
-              work done faster. Previously, I worked as a Software Engineer at
-              NumberWorks'nWords, where I architected solutions for an educational
-              platform serving thousands of students across 70+ franchise centres. I led a
-              complete infrastructure transformation—migrating from a fragile single EC2
-              instance to a scalable, containerised AWS ECS environment. This resulted in
-              99.9% uptime, 45-minute to 5-minute deployment times, and dashboard load
-              time improvements from 10+ seconds to 100ms.
+              I'm now a Backend Engineer on the AI team at Atlassian, working with Kotlin,
+              Java, and Spring Boot to build Rovo Chat — an AI-powered assistant that
+              helps teams find information and get work done faster. Previously, I worked
+              as a Software Engineer at NumberWorks'nWords, where I architected solutions
+              for an educational platform serving thousands of students across 70+
+              franchise centres. I led a complete infrastructure transformation—migrating
+              from a fragile single EC2 instance to a scalable, containerised AWS ECS
+              environment. This resulted in 99.9% uptime, 45-minute to 5-minute deployment
+              times, and dashboard load time improvements from 10+ seconds to 100ms.
             </p>
             <p>
               Beyond my full-time role, I develop comprehensive solutions for diverse

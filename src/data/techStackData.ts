@@ -14,6 +14,98 @@ export interface TechData {
 
 export const techStackData: TechData[] = [
   {
+    name: 'Kotlin',
+    slug: 'kotlin',
+    description:
+      'I use Kotlin for backend development at Atlassian. Its concise syntax, null safety, and excellent Java interoperability make it ideal for building robust, maintainable services.',
+    websiteUrl: 'https://kotlinlang.org/',
+    codeSnippet: `data class User(
+    val id: String,
+    val name: String,
+    val email: String,
+    val createdAt: Instant = Instant.now()
+)
+
+class UserService(private val userRepository: UserRepository) {
+    
+    suspend fun findById(id: String): User? {
+        return userRepository.findById(id)
+    }
+    
+    suspend fun create(name: String, email: String): User {
+        val user = User(
+            id = UUID.randomUUID().toString(),
+            name = name,
+            email = email
+        )
+        return userRepository.save(user)
+    }
+}`,
+    codeLanguage: 'kotlin'
+  },
+  {
+    name: 'Java',
+    slug: 'openjdk',
+    description:
+      'Java is a core language in my backend development toolkit. Its mature ecosystem, strong typing, and enterprise-grade libraries make it perfect for building scalable services.',
+    websiteUrl: 'https://www.java.com/',
+    codeSnippet: `@Service
+public class UserService {
+    
+    private final UserRepository userRepository;
+    
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+    
+    public Optional<User> findById(String id) {
+        return userRepository.findById(id);
+    }
+    
+    public User create(CreateUserRequest request) {
+        User user = User.builder()
+            .id(UUID.randomUUID().toString())
+            .name(request.getName())
+            .email(request.getEmail())
+            .createdAt(Instant.now())
+            .build();
+        
+        return userRepository.save(user);
+    }
+}`,
+    codeLanguage: 'java'
+  },
+  {
+    name: 'Spring Boot',
+    slug: 'springboot',
+    description:
+      'Spring Boot is my framework of choice for building production-ready Java/Kotlin applications. Its convention-over-configuration approach and extensive ecosystem accelerate development.',
+    websiteUrl: 'https://spring.io/projects/spring-boot',
+    codeSnippet: `@RestController
+@RequestMapping("/api/users")
+class UserController(private val userService: UserService) {
+
+    @GetMapping("/{id}")
+    fun getUser(@PathVariable id: String): ResponseEntity<User> {
+        return userService.findById(id)
+            ?.let { ResponseEntity.ok(it) }
+            ?: ResponseEntity.notFound().build()
+    }
+
+    @PostMapping
+    fun createUser(@RequestBody request: CreateUserRequest): ResponseEntity<User> {
+        val user = userService.create(request.name, request.email)
+        return ResponseEntity.status(HttpStatus.CREATED).body(user)
+    }
+
+    @ExceptionHandler(ValidationException::class)
+    fun handleValidation(ex: ValidationException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.badRequest().body(ErrorResponse(ex.message))
+    }
+}`,
+    codeLanguage: 'kotlin'
+  },
+  {
     name: 'TypeScript',
     slug: 'typescript',
     description:

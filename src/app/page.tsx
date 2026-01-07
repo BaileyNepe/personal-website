@@ -202,9 +202,9 @@ const Home = async () => {
                 Hi, I&apos;m Bailey 👋. I architect end-to-end technical solutions that
                 solve real business problems. From transforming critical infrastructure to
                 optimising performance from seconds to milliseconds, I build scalable,
-                reliable systems using React, Node.js, TypeScript, and AWS. I specialise
-                in identifying inefficiencies and delivering comprehensive solutions that
-                drive measurable business impact.
+                reliable systems using React, Kotlin, Node.js, TypeScript, and AWS. I
+                specialise in identifying inefficiencies and delivering comprehensive
+                solutions that drive measurable business impact.
               </p>
               <div className='mt-6 flex justify-center gap-6'>
                 <SocialLinks />
